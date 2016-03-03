@@ -1,0 +1,405 @@
+# This data structure provides information about each QTL analysis to
+# perform. Each list element of "analyses" is a list with the
+# following list elements: "pheno", the phenotype or trait to map;
+# "cov", the covariates to include in the regression model of the
+# phenotype; "outliers", specification of the data points to remove
+# according to the residuals after removing the effects of the
+# covariates; and "file", the RData file where the results will be
+# saved.
+analyses <- list(
+    
+# MUSCLE + BONE TRAITS.
+# For all five muscle weights (TA, EDL, soleus, plantaris and
+# gastrocnemius), I map QTLs for these traits in three different ways:
+# (1) with no covariates; (2) conditioning on tibia length ("tibia");
+# and (3) conditioning on both tibia length and body weight
+# ("sacweight"). For tibia length, I map QTLs conditioned on body
+# weight.
+#
+# Tibia length explains 12-18% of variance in the muscle weights. The
+# rationale for including tibia length as a covariate is bone length
+# may somehow regulate muscle weight as well, and we would like to
+# isolate the genetic factors that directly regulate development of
+# the muscle tissues.
+#  
+# For bone-mineral density (BMD), I created a binary trait that
+# signals "abnormal" bone-mineral density. I do not include any
+# covariates when mapping QTLs for these traits. Ari suggested that I
+# try controlling for tibia length and gastroc weight, but each of
+# these traits do *not* appear to be correlated with BMD, at least
+# based on the data we have. Body weight is also uncorrelated with
+# BMD.
+# 
+# For all the muscle and bone traits, I include a binary indicator for
+# round SW16 as a covariate because the mice from this round showed
+# substantial deviation in these traits from the rest of the mice.
+TA1      = list(pheno="TA",cov="SW16",file="gwscan.TA.RData",
+                outliers=function (x) x < (-20) | x > 20),
+TA2      = list(pheno="TA",cov=c("SW16","tibia"),
+                outliers=function (x) x < (-18),
+                file="gwscan.TA.given.tibia.RData",
+                h=seq(0.2,0.6,0.01)),
+TA3      = list(pheno="TA",cov=c("SW16","tibia","sacweight"),
+                outliers=function (x) x < (-15) | x > 15,
+                file="gwscan.TA.given.tibia+bw.RData"),    
+EDL1     = list(pheno="EDL",cov="SW16",file="gwscan.EDL.RData",
+                outliers=function (x) x < (-4) | x > 4),
+EDL2     = list(pheno="EDL",cov=c("SW16","tibia"),
+                outliers=function (x) x < (-5) | x > 4,
+                file="gwscan.EDL.given.tibia.RData",
+                h=seq(0.2,0.55,0.01)),
+EDL3     = list(pheno="EDL",cov=c("SW16","tibia","sacweight"),
+                outliers=function (x) x < (-4) | x > 4,
+                file="gwscan.EDL.given.tibia+bw.RData"),
+soleus1  = list(pheno="soleus",cov="SW16",file="gwscan.soleus.RData",
+                outliers=function (x) x < (-4) | x > 4),
+soleus2  = list(pheno="soleus",cov=c("SW16","tibia"),
+                outliers=function (x) x < (-4) | x > 4,
+                file="gwscan.soleus.given.tibia.RData",
+                h=seq(0.1,0.5,0.01)),
+soleus3  = list(pheno="soleus",cov=c("SW16","tibia","sacweight"),
+                outliers=function (x) x < (-3.5) | x > 3.5,
+                file="gwscan.soleus.given.tibia+bw.RData"),    
+plant1   = list(pheno="plantaris",cov="SW16",file="gwscan.plantaris.RData",
+                outliers=function (x) x < (-8) | x > 8),
+plant2   = list(pheno="plantaris",cov=c("SW16","tibia"),
+                outliers=function (x) x < (-9) | x > 8,
+                file="gwscan.plantaris.given.tibia.RData",
+                h=seq(0.1,0.4,0.01)),
+plant3   = list(pheno="plantaris",cov=c("SW16","tibia","sacweight"),
+                outliers=function (x) x < (-8) | x > 7,
+                file="gwscan.plantaris.given.tibia+bw.RData"),    
+gastroc1 = list(pheno="gastroc",cov="SW16",file="gwscan.gastroc.RData",
+                outliers=function (x) x < (-50) | x > 50),
+gastroc2 = list(pheno="gastroc",cov=c("SW16","tibia"),
+                outliers=function (x) x < (-40) | x > 50,
+                file="gwscan.gastroc.given.tibia.RData",
+                h=seq(0.2,0.55,0.01)),
+gastroc3 = list(pheno="gastroc",cov=c("SW16","tibia","sacweight"),
+                outliers=function (x) x < (-40) | x > 40,
+                file="gwscan.gastroc.given.tibia+bw.RData"),
+tibia    = list(pheno="tibia",cov=c("SW6","SW16","sacweight"),
+                outliers=function (x) x < (-1.5),
+                file="gwscan.tibia.RData",h=seq(0.2,0.6,0.01)),
+BMD      = list(pheno="BMD",cov="SW16",outliers=function (x) x > 0.14,
+                file="gwscan.BMD.RData"),
+abBMD    = list(pheno="abBMD",cov="SW16",outliers=NULL,
+                file="gwscan.abnormalBMD.RData",h=seq(0.01,0.3,0.01)),
+
+# OTHER PHYSIOLOGICAL TRAITS.
+# Here I have various other physiological traits, including body
+# weight, testes weight, tail length and fasting glucose levels.
+# 
+# BODY WEIGHTS: Body weights bw1, bw2 and bw3 were measured on
+# subsequent days of the methamphetamine sensitivity tests, and are
+# highly correlated with each other (r^2 = 98%), and as well as with
+# PPI weight and sacweight, so I only map QTLs for the "bw0" and
+# "sacweight" body weight measurements. The body weight measurements
+# after sacrifice ("sacweight") show a considerable departure in Round
+# SW17, so I include a binary indicator for this round as a covariate
+# for sacweight.
+#
+# I include age as a covariate for the "bw0" body weight because it
+# was measured while the mouse was still growing, so would obviously
+# depend on the age at which the body weight was taken.
+#
+# GLUCOSE LEVELS: Fasting glucose levels are explained partially by
+# body weight (PVE = 6%), so I include body weight as a covariate for
+# fasting glucose levels. Rounds SW1 and SW11 showed a considerable
+# departure in fasting glucose levels from the other rounds, so I
+# included binary indicators for these two rounds as a covariate for
+# fasting glucose levels.
+fastgl = list(pheno="fastglucose",cov=c("SW1","SW11","bw0"),
+              outliers=function (x) x < (-60) | x > 60,
+              file="gwscan.fastglucose.RData",
+              h=seq(0.01,0.25,0.01)),
+tail   = list(pheno="taillength",cov=c("bw0","glucoseage","SW3","SW4",
+              "SW19","SW20","SW22","SW24"),outliers = NULL,
+              file="gwscan.taillength.RData",h=seq(0.1,0.5,0.01)),
+testes = list(pheno="testesweight",cov="sacweight",
+              outliers=function (x) x < (-0.075),
+              file="gwscan.testesweight.RData",
+              h=seq(0.3,0.7,0.01)),
+bw0    = list(pheno="bw0",cov="glucoseage",
+              outliers=function (x) x < (-8.5) | x > 8.5,
+              file="gwscan.bw0.RData"),
+bw1    = list(pheno="bw1",cov=c("methage","SW17"),file="gwscan.bw1.RData",
+              outliers=function (x) x < (-9) | x > 10),
+ppiwt  = list(pheno="PPIweight",cov="SW17",outliers=NULL,
+              file="gwscan.ppiweight.RData"),
+sacwt  = list(pheno="sacweight",cov="SW17",outliers=NULL,
+              file="gwscan.sacweight.RData",h=seq(0.15,0.5,0.01)),
+
+# New Trait derived from the sacwt and tibia length
+# sacwt.tibia.length = sacwt/tibia^2
+#
+# The distribution of the values is all over the place with respect to
+# the batches, I use all the batches that have a p-value (wald) < 0.001
+# in a model with all the batches as covariates. Push comes to shove, only
+# SW17 is really very different from the overall mean, but others show reasonable
+# deviation from the grand mean.
+sacwt.bmi.tibia =
+  list(pheno="sacwt.bmi.tibia",
+       cov = c("SW1","SW2","SW6","SW9","SW10","SW17"),
+       outliers=function(x) x > 0.044,file="gwscan.bmi.RData"),
+
+# FEAR CONDITIONING TRAITS.
+# For all fear conditioning traits, the cage used for testing appears
+# to have an effect on the phenotype, so I include binary indicators
+# for cage ("FCbox1", "FCbox2", "FCbox3") as covariates for all FC
+# phenotypes. Further, the FC phenotype measurements in Round SW17
+# show a noticeably different distribution in the FC phenotypes from
+# the other rounds, so I include a binary indicator for round SW17 as
+# a covariate in all FC traits.
+#
+# These analyses control for proportion of freezing on day 1 during
+# exposure to the tone ("AvToneD1"). AvToneD1 explains 11-25% of the
+# variance in the Day 2 and Day 3 freezing measures. Note that here we
+# can map QTLs for freezing to the altered context on Day 3
+# ("AvAltContextD3") as a quantitative trait after conditioning on
+# AvToneD1 because the distribution for this trait is no longer quite
+# so bimodal, and looks fairly "normal". So there is no need to map
+# QTLs for the binary version of this trait.
+d2ctxt = list(pheno="AvContextD2",outliers=NULL,
+              cov=c("AvToneD1","FCbox1","FCbox2","FCbox3","SW17"),
+              file="gwscan.AvContextD2.RData",h=seq(0.02,0.35,0.01)),
+d3altc = list(pheno="AvAltContextD3",outliers=function (x) x > 1,
+              cov=c("AvToneD1","FCbox1","FCbox2","FCbox3","SW17"),
+              file="gwscan.AvAltContextD3.RData",h=seq(0.01,0.25,0.01)),
+d3tone = list(pheno="AvToneD3",outliers=NULL,h=seq(0.05,0.5,0.01),
+              cov=c("AvToneD1","FCbox1","FCbox2","FCbox3","SW17"),
+              file="gwscan.AvToneD3.RData"),
+extinct = list(pheno="D3.360",outliers=NULL,
+               cov=c("D3.180","FCbox1","FCbox2","FCbox3","SW17"),
+               file="gwscan.extinction.RData"),
+
+# ADDED FEAR CONDITIONING TRAITS
+# These were added by Shyam fo inclusion in the mega analysis bit.
+# PreTrainD1 is a very ugly trait with massive box effects and a lot
+# of low values, which might have to be removed as outliers. It is
+# quite likely that these outliers represent the "deaf" mice that
+# might be skewing the whole results.  These outliers are present in
+# every box, so not a box specific effect. ARGH!!!!
+pretraind1    = list(pheno="PreTrainD1",cov=c("FCbox1","FCbox2","FCbox3",
+                     "SW10","SW16","SW17","SW20"),outliers=NULL,
+                      file="gwscan.pretraind1.RData"),
+d1avtone      = list(pheno="AvToneD1",cov=c("FCbox1","FCbox2","FCbox3",
+                     "SW10","SW7","SW14","SW20"),outliers=NULL,
+                      file="gwscan.avtoned1.RData"),
+
+# LOCOMOTOR TRAITS
+# The 5 minute activity bins from the meth sensitivity tests
+# that are part of the mega analysis project in cohort with
+# Oxford.
+# Meth cage 7 have a very different observations than other testing
+# cages, so it is included as covariate in each of the following
+# traits. Meth cages 9 and 10 show up as explanatory in a few of the
+# traits.
+# Similarly,batch SW13 has a different distribution than the others
+# so included in all the traits. batches
+d1hact5     = list(pheno="d1hact5",cov=c("methcage7","methcage9","methcage10"),
+                   outliers=NULL, file="gwscan.d1hact5.RData"),
+d1hact10    = list(pheno="d1hact10", cov=c("methcage7", "methcage10"),
+                   outliers=NULL, file="gwscan.d1hact10.RData"),
+d1hact15    = list(pheno="d1hact15", cov=c("methcage7", "methcage10"),
+                   outliers=NULL, file="gwscan.d1hact15.RData"),
+d1hact20    = list(pheno="d1hact20", cov=c("methcage7", "methcage10"),
+                   outliers=NULL, file="gwscan.d1hact20.RData"),
+d1hact25    = list(pheno="d1hact25", cov="methcage7",
+                   outliers=NULL, file="gwscan.d1hact25.RData"),
+d1hact30    = list(pheno="d1hact30", cov="methcage7",
+                   outliers=NULL, file="gwscan.d1hact30.RData"),
+d1hactbasal = list(pheno="d1hact30", cov="methcage7",
+                   outliers=NULL, file="gwscan.d1hactbasal.RData"),
+d1hactdecay = list(pheno="d1hact30", cov=c("methcage7", "methcage9"),
+                   outliers=NULL, file="gwscan.d1hactdecay.RData"),
+
+
+# METHAMPHETAMINE SENSITIVITY TRAITS.
+# I checked all the cages used in these tests to see whether the
+# phenotypes measured using any given cage departed noticeably from
+# the other cages, and only cage #7 does, so I include a binary
+# indicator for this cage in all my analyses of the methamphetamine
+# sensitivity phenotypes.
+d1dist0to30 = list(pheno="D1totaldist0to30",cov="methcage7",
+                   outliers=function (x) x < (-3500) | x > 4000,
+                   file="gwscan.D1totaldist0to30.RData",
+                   h=seq(0.2,0.6,0.01)),
+d1dist0to15 = list(pheno="D1totaldist0to15",cov="methcage7",
+                   outliers=function (x) x < (-2000) | x > 2200,
+                   file="gwscan.D1totaldist0to15.RData"),
+d2dist0to30 = list(pheno="D2totaldist0to30",cov="methcage7",
+                   outliers=function (x) x > 4500,
+                   file="gwscan.D2totaldist0to30.RData"),
+d2dist0to15 = list(pheno="D2totaldist0to15",cov="methcage7",
+                   outliers=function (x) x < (-2000) | x > 2500,
+                   file="gwscan.D2totaldist0to15.RData"),
+d3dist0to30 = list(pheno="D3totaldist0to30",cov="methcage7",
+                   outliers=function (x) x > 20000,
+                   file="gwscan.D3totaldist0to30.RData",
+                   h=seq(0.2,0.6,0.01)),
+d3dist0to15 = list(pheno="D3totaldist0to15",cov="methcage7",
+                   outliers=function (x) x > 8500,
+                   file="gwscan.D3totaldist0to15.RData"),
+d1totdist5  = list(pheno="D1TOTDIST5",cov="methcage7",
+                   outliers=function (x) x < (-1000) | x > 1000,
+                   file="gwscan.d1totdist5.RData"),
+d1totdist10 = list(pheno="D1TOTDIST10",cov="methcage7",
+                   outliers=function (x) x < (-750) | x > 750,
+                   file="gwscan.d1totdist10.RData"),
+d1totdist15 = list(pheno="D1TOTDIST15",cov="methcage7",
+                   outliers=function (x) x < (-750) | x > 750,
+                   file="gwscan.d1totdist15.RData"),
+d1totdist20 = list(pheno="D1TOTDIST20",cov="methcage7",
+                   outliers=function (x) x < (-750) | x > 750,
+                   file="gwscan.d1totdist20.RData"),
+d1totdist25 = list(pheno="D1TOTDIST25",cov="methcage7",
+                   outliers=function (x) x < (-750) | x > 750,
+                   file="gwscan.d1totdist25.RData"),
+d1totdist30 = list(pheno="D1TOTDIST30",cov="methcage7",
+                   outliers=function (x) x > 700,
+                   file="gwscan.d1totdist30.RData"),
+
+d2totdist5  = list(pheno="D2TOTDIST5",cov="methcage7",
+                   outliers=function (x) x < (-1250) | x > 1250,
+                   file="gwscan.d2totdist5.RData",
+                   h=seq(0.1,0.5,0.01)),
+d2totdist10 = list(pheno="D2TOTDIST10",cov="methcage7",
+                   outliers=function (x) x > 1000,
+                   file="gwscan.d2totdist10.RData"),
+d2totdist15 = list(pheno="D2TOTDIST15",cov="methcage7",
+                   outliers=function (x) x > 850,
+                   file="gwscan.d2totdist15.RData"),
+d2totdist20 = list(pheno="D2TOTDIST20",cov="methcage7",
+                   outliers=function (x) x > 1000,
+                   file="gwscan.d2totdist20.RData"),
+d2totdist25 = list(pheno="D2TOTDIST25",cov="methcage7",outliers=NULL,
+                   file="gwscan.d2totdist25.RData"),
+d2totdist30 = list(pheno="D2TOTDIST30",cov="methcage7",
+                   outliers=function (x) x > 900,
+                   file="gwscan.d2totdist30.RData"),
+
+d3totdist5  = list(pheno="D3TOTDIST5",cov="methcage7",
+                   outliers=function (x) x > 2000,
+                   file="gwscan.d3totdist5.RData"),
+d3totdist10 = list(pheno="D3TOTDIST10",cov="methcage7",
+                   outliers=function (x) x > 4000,
+                   file="gwscan.d3totdist10.RData"),
+d3totdist15 = list(pheno="D3TOTDIST15",cov="methcage7",
+                   outliers=function (x) x > 4000,
+                   file="gwscan.d3totdist15.RData"),
+d3totdist20 = list(pheno="D3TOTDIST20",cov="methcage7",
+                   outliers=function (x) x > 4500,
+                   file="gwscan.d3totdist20.RData"),
+d3totdist25 = list(pheno="D3TOTDIST25",cov="methcage7",
+                   outliers=function (x) x > 4500,
+                   file="gwscan.d3totdist25.RData"),
+d3totdist30 = list(pheno="D3TOTDIST30",cov="methcage7",
+                   outliers=function (x) x > 3750,
+                   file="gwscan.d3totdist30.RData"),
+
+D1ctrtime0to15 = list(pheno="D1ctrtime0to15",cov="methcage7",
+                      outliers=function (x) x < (-0.5),
+                      file="gwscan.d1ctrtime0to15.RData"),
+D2ctrtime0to15 = list(pheno="D2ctrtime0to15",cov="methcage7",
+                      outliers=function (x) x < (-0.75),
+                      file="gwscan.d2ctrtime0to15.RData"),
+D3ctrtime0to15 = list(pheno="D3ctrtime0to15",cov="methcage7",
+                      outliers=function (x) x < (-0.75),
+                      file="gwscan.d3ctrtime0to15.RData"),
+
+D1ctrtime0to30 = list(pheno="D1ctrtime0to30",cov="methcage7",
+                      outliers=function (x) x < (-0.6),
+                      file="gwscan.d1ctrtime0to30.RData",
+                      h=seq(0.1,0.5,0.01)),
+D2ctrtime0to30 = list(pheno="D2ctrtime0to30",cov="methcage7",
+                      outliers=function (x) x < (-0.75),
+                      file="gwscan.d2ctrtime0to30.RData",
+                      h=seq(0.05,0.45,0.01)),
+D3ctrtime0to30 = list(pheno="D3ctrtime0to30",cov="methcage7",
+                      outliers=function (x) x < (-0.85),
+                      file="gwscan.d3ctrtime0to30.RData"),
+
+D1hact0to15 = list(pheno="D1hact0to15",cov="methcage7",outliers=NULL,
+                      file="gwscan.d1hact0to15.RData"),
+D2hact0to15 = list(pheno="D2hact0to15",cov="methcage7",outliers=NULL,
+                   file="gwscan.d2hact0to15.RData", 
+                   h=seq(0.2,0.6,0.01)),
+D3hact0to15 = list(pheno="D3hact0to15",cov="methcage7",outliers=NULL,
+                      file="gwscan.d3hact0to15.RData"),
+
+D1hact0to30 = list(pheno="D1hact0to30",cov="methcage7",outliers=NULL,
+                    file="gwscan.d1hact0to30.RData"),
+D2hact0to30 = list(pheno="D2hact0to30",cov="methcage7",outliers=NULL,
+                    file="gwscan.d2hact0to30.RData"),
+D3hact0to30 = list(pheno="D3hact0to30",cov="methcage7",outliers=NULL,
+                    file="gwscan.d3hact0to30.RData"),
+
+D1vact0to15 = list(pheno="D1vact0to15",
+                   cov=c("methcage7","methcage8","methcage9","methcage10",
+                         "methcage11","methcage12"),
+                   outliers=function (x) x < (-0.85) | x > 0.85,
+                   file="gwscan.d1vact0to15.RData"),
+D2vact0to15 = list(pheno="D2vact0to15",
+                   cov=c("methcage7","methcage8","methcage9","methcage10",
+                         "methcage11","methcage12"),
+                   outliers=function (x) x < (-1) | x > 1,
+                   file="gwscan.d2vact0to15.RData"),
+D3vact0to15 = list(pheno="D3vact0to15",
+                   cov=c("methcage7","methcage8","methcage9","methcage10",
+                         "methcage11","methcage12"),
+                   outliers=function (x) x < (-1.25) | x > 1.25,
+                   file="gwscan.d3vact0to15.RData",
+                   h=seq(0.1,0.5,0.01)),
+
+D1vact0to30 = list(pheno="D1vact0to30",
+                   cov=c("methcage7","methcage8","methcage9","methcage10",
+                         "methcage11","methcage12"),
+                   outliers=function (x) x < (-1) | x > 1,
+                   file="gwscan.d1vact0to30.RData"),
+D2vact0to30 = list(pheno="D2vact0to30",
+                   cov=c("methcage7","methcage8","methcage9","methcage10",
+                         "methcage11","methcage12"),
+                   outliers=function (x) x < (-1) | x > 1,
+                   file="gwscan.d2vact0to30.RData"),
+D3vact0to30 = list(pheno="D3vact0to30",
+                   cov=c("methcage7","methcage8","methcage9","methcage10",
+                         "methcage11","methcage12"),
+                   outliers=function (x) x > 1.5,
+                   file="gwscan.d3vact0to30.RData",
+                   h=seq(0.1,0.5,0.01)),
+
+# PREPULSE INHIBITION (PPI) PHENOTYPES.
+# All boxes appear to have some effect on some of the PPI phenotypes,
+# with Box #3 having a particularly large effect on some phenotypes,
+# so I include all PPI box indicators as covariates in analysis of the
+# PPI phenotypes.
+#
+# I also map QTLs for habituation to the pulses by analyzing the
+# startle response during the fourth block of pulse-alone trials
+# against the startle response during the first block of pulse-alone
+# trials.
+pp3PPIavg = list(pheno="pp3PPIavg",file="gwscan.pp3PPIavg.RData",
+                  cov=c("PPIbox1","PPIbox2","PPIbox3","PPIbox4"),
+                  outliers=function (x) x < (-0.9),
+                  h=seq(0.01,0.4,0.01)),
+pp6PPIavg  = list(pheno="pp6PPIavg",file="gwscan.pp6PPIavg.RData",
+                  cov=c("PPIbox1","PPIbox2","PPIbox3","PPIbox4"),
+                  outliers=function (x) x < (-1.1),
+                  h=seq(0.01,0.4,0.01)),
+pp12PPIavg = list(pheno="pp12PPIavg",file="gwscan.pp12PPIavg.RData",
+                  cov=c("PPIbox1","PPIbox2","PPIbox3","PPIbox4"),
+                  outliers=function (x) x < (-1),
+                  h=seq(0.01,0.4,0.01)),
+PPIavg     = list(pheno="PPIavg",file="gwscan.PPIavg.RData",
+                  cov=c("PPIbox1","PPIbox2","PPIbox3","PPIbox4"),
+                  outliers=function (x) x < (-1),
+                  file="gwscan.PPIavg.RData"),
+PPIstartle = list(pheno="startle",file="gwscan.PPIstartle.RData",
+                  cov=c("PPIbox1","PPIbox2","PPIbox3","PPIbox4"),
+                  outliers=function (x) x > 250,h=seq(0.1,0.6,0.01),
+                  file="gwscan.PPIstartle.RData"),
+PPIhabit   = list(pheno="p120b4",file="gwscan.PPIhabit.RData",
+                  cov=c("p120b1","PPIbox1","PPIbox2","PPIbox3","PPIbox4"),
+                  outliers=function (x) x < (-140) | x > (140),
+                  file="gwscan.PPIhabit.RData",h=seq(0.01,0.3,0.01)))
