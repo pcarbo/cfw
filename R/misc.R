@@ -1,19 +1,13 @@
 # SUMMARY
 # -------
-# This file contains a number of useful symbol and function
-# definitions that do not fit under any one category. Here is an
-# overview of the functions defined in this file:
+# This file contains some function definitions that don't fit in any
+# other file. Here is an overview of the functions defined in this
+# file:
 #
 #    caterase(s)
-#    sigmoid(x)
 #    logit10(x)
-#    sigmoid10(x)
 #    project.onto.interval(x,a,b)
-#    repmat(A,m,n)
 #    center.columns(X)
-#    mat.sq(A)
-#    var1(X)
-#    diagsq(X,a)
 #    is.binary.factor(x)
 #    is.binary(x)
 #    binfactor2num(x)
@@ -22,13 +16,7 @@
 #    computemaf(geno)
 #    getgenocounts(geno)
 #    check.normal.quantiles(x)
-#    roots2(a,b,c)
 #
-# SYMBOL DEFINITIONS
-# ----------------------------------------------------------------------
-# Shorthand for machine epsilon.
-eps <- .Machine$double.eps
-
 # FUNCTION DEFINITIONS
 # ----------------------------------------------------------------------
 # Output the string using 'cat', then move the cursor back to the
@@ -38,31 +26,14 @@ caterase <- function (s)
   cat(s,rep("\b",nchar(s)),sep="")
 
 # ----------------------------------------------------------------------
-# Returns the sigmoid of x. The sigmoid function is also known as
-# the logistic link function. It is the inverse of logit(x).
-sigmoid <- function (x)
-  return(1/(1 + exp(-x)))
-
-# ----------------------------------------------------------------------
 # Returns the logit of x (using the base 10 logarithm).
 logit10 <- function (x)
   log10((x + eps)/(1 - x + eps))
 
 # ----------------------------------------------------------------------
-# Returns the base-10 sigmoid of x. It is the inverse of logit10(x).
-sigmoid10 <- function (x)
-  return(1/(1 + 10^(-x)))
-
-# ----------------------------------------------------------------------
 # Returns x projected onto interval [a,b].
 project.onto.interval <- function (x, a, b)
   pmin(b,pmax(a,x))
-
-# ----------------------------------------------------------------------
-# Does the same thing as repmat(A,m,n) in MATLAB.
-repmat <- function (A,m,n) {
-  return(kronecker(matrix(1,m,n),A))
-}
 
 # ----------------------------------------------------------------------
 # Centers the columns of matrix X so that the entries in each column
@@ -71,33 +42,6 @@ center.columns <- function (X) {
   mu <- matrix(colMeans(X),1,ncol(X))
   X  <- X - repmat(mu,nrow(X),1)
   return(X)
-}
-
-# ----------------------------------------------------------------------
-# Returns the matrix product X'*X.
-mat.sq <- function (A)
-  return(t(A) %*% A)
-
-# ----------------------------------------------------------------------
-# This is the same as VAR(X,1)' in MATLAB.
-var1 <- function (X) {
-  n <- nrow(X)
-  return(apply(X,2,function(x) (n-1)/n*var(x)))
-}
-
-# ----------------------------------------------------------------------
-# diagsq(X) returns diag(X'*X).
-# diagsq(X,a) returns diag(X'*diag(a)*X).
-diagsq <- function (X, a = NULL) {
-  if (is.null(a)) {
-    n <- nrow(X)
-    a <- rep(1,n)
-  }
-
-  # Compute y = (X.^2)'*a.
-  a <- c(a)
-  y <- c(a %*% X^2)
-  return(y)
 }
 
 # ----------------------------------------------------------------------
@@ -190,11 +134,4 @@ check.normal.quantiles <- function (x) {
                             mean(-2 < x & x < 2),
                             mean(-3 < x & x < 3)),
                     row.names = c("sd1","sd2","sd3")))
-}
-
-# ----------------------------------------------------------------------
-# ROOTS2(A,B,C) returns solutions X to quadratic A*X^2 + B*X + C = 0.
-roots2 <- function (a, b, c) {
-  q <- -(b + sign(b)*sqrt(b^2 - 4*a*c))/2
-  return(c(q/a,c/q))
 }

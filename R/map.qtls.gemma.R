@@ -14,7 +14,7 @@ source("qtl.analyses.R")
 which.analysis <- "EDL2"
 chromosomes    <- NULL
 incl.markers   <- NULL
-gemmadir       <- "/Users/pcarbo"
+gemmadir       <- "gemma_out"
 resultdir      <- "/Users/pcarbo"
 gemma.exe      <- "~/shyamg/bin/gemma"
 num.perms      <- 0
