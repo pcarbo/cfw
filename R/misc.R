@@ -26,18 +26,18 @@ caterase <- function (s)
   cat(s,rep("\b",nchar(s)),sep="")
 
 # ----------------------------------------------------------------------
-# Returns the logit of x (using the base 10 logarithm).
+# Return the logit of x (using the base-10 logarithm).
 logit10 <- function (x)
   log10((x + eps)/(1 - x + eps))
 
 # ----------------------------------------------------------------------
-# Returns x projected onto interval [a,b].
+# Return x projected onto interval [a,b].
 project.onto.interval <- function (x, a, b)
   pmin(b,pmax(a,x))
 
 # ----------------------------------------------------------------------
-# Centers the columns of matrix X so that the entries in each column
-# of X add up to zero.
+# Center the columns of matrix X so that the entries in each column
+# of X add up to 0.
 center.columns <- function (X) {
   mu <- matrix(colMeans(X),1,ncol(X))
   X  <- X - repmat(mu,nrow(X),1)
@@ -45,15 +45,15 @@ center.columns <- function (X) {
 }
 
 # ----------------------------------------------------------------------
-# Returns TRUE if x is a factor with exactly 2 levels.
+# Return TRUE if x is a factor with exactly 2 levels.
 is.binary.factor <- function (x)
-  return(is.factor(x) & nlevels(x) == 2)
+  is.factor(x) & nlevels(x) == 2
     
 # ----------------------------------------------------------------------
-# Returns TRUE if all elements of a numeric vector are either 0 or 1,
+# Return TRUE if all elements of a numeric vector are either 0 or 1,
 # ignoring missing values (NA).
 is.binary <- function (x)
-  return(is.numeric(x) & sum(!(x == 0 | x == 1),na.rm = TRUE) == 0)
+  is.numeric(x) & sum(!(x == 0 | x == 1),na.rm = TRUE) == 0
 
 # ----------------------------------------------------------------------
 # Convert a factor with exactly 2 levels to a numeric vector with
@@ -65,7 +65,7 @@ binfactor2num <- function (x) {
 }
   
 # ----------------------------------------------------------------------
-# Returns a data frame with one column for each level of factor x. The
+# Return a data frame with one column for each level of factor x. The
 # columns of the data frame encode the categorical variable with n
 # levels as n binary variables.
 binary.from.categorical <- function (x, col.names = NULL) {
@@ -86,10 +86,10 @@ binary.from.categorical <- function (x, col.names = NULL) {
 }
 
 # ----------------------------------------------------------------------
-# For each row of the matrix or data frame, returns true if all the
-# entries in the row are provided (not missing).
+# For each row of the matrix or data frame, return TRUE if all the
+# entries in the row are provided (that is, they are not missing).
 none.missing.row <- function (x)
-    rowSums(is.na(x)) == 0
+  rowSums(is.na(x)) == 0
 
 # ----------------------------------------------------------------------
 # Returns the minor allele frequency given a vector of genotypes
@@ -103,7 +103,7 @@ computemaf <- function (geno) {
 # Return a data frame with three columns, "AA", "AB" and "BB", that
 # report the number of homozygous AA, heterozygous and homozygous BB
 # genotypes, respectively, at each SNP. The input is a matrix or data
-# frame with columns corresponding to SNPs, and rows corresponding to
+# frame with columns corresponding to SNPs and rows corresponding to
 # samples.
 getgenocounts <- function (geno)  {
   counts <- cbind(colSums(geno == 0,na.rm = TRUE),
@@ -114,7 +114,7 @@ getgenocounts <- function (geno)  {
 }
 
 # ----------------------------------------------------------------------
-# Check whether the observed quantiles match what we would expect
+# Compare the empirical quantiles of x against the expected valuesx
 # under the normal distribution.
 check.normal.quantiles <- function (x) {
 
