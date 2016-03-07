@@ -13,8 +13,7 @@
 #    binfactor2num(x)
 #    binary.from.categorical(x,col.names)
 #    none.missing.row(x)
-#    computemaf(geno)
-#    getgenocounts(geno)
+#    compute.maf(geno)
 #    check.normal.quantiles(x)
 #
 # FUNCTION DEFINITIONS
@@ -43,8 +42,8 @@ project.onto.interval <- function (x, a, b)
 # of X add up to 0.
 # 
 center.columns <- function (X) {
-  y <- matrix(colMeans(X),1,ncol(X))
-  X <- X - y
+  y <- colMeans(X)
+  X <- X - matrix(y,nrow(X),ncol(X),byrow = TRUE)
   return(X)
 }
 
@@ -98,23 +97,9 @@ none.missing.row <- function (x)
 # ----------------------------------------------------------------------
 # Returns the minor allele frequency given a vector of genotypes
 # encoded as allele counts.
-computemaf <- function (geno) {
+compute.maf <- function (geno) {
   f <- mean(geno,na.rm = TRUE)/2
   return(min(f,1-f))
-}
-
-# ----------------------------------------------------------------------
-# Return a data frame with three columns, "AA", "AB" and "BB", that
-# report the number of homozygous AA, heterozygous and homozygous BB
-# genotypes, respectively, at each SNP. The input is a matrix or data
-# frame with columns corresponding to SNPs and rows corresponding to
-# samples.
-getgenocounts <- function (geno)  {
-  counts <- cbind(colSums(geno == 0,na.rm = TRUE),
-                  colSums(geno == 1,na.rm = TRUE),
-                  colSums(geno == 2,na.rm = TRUE))
-  colnames(counts) <- c("AA","AB","BB")
-  return(counts)
 }
 
 # ----------------------------------------------------------------------

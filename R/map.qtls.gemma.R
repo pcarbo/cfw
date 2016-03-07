@@ -66,7 +66,7 @@ X     <- X[match(ids,rownames(X)),]
 # the genotype probabilities. Retain SNPs for which: (1) at least 95%
 # of the samples have a maximum probability genotype greater than than
 # 0.5; (2) the minor allele frequency is greater than 2%.
-f       <- apply(X,2,computemaf)
+f       <- apply(X,2,compute.maf)
 markers <- which(quality > 0.95 & f > 0.02)
 map     <- map[markers,]
 X       <- X[,markers]
