@@ -31,7 +31,7 @@ outliers   <- analysis$outliers
 # Load the phenotype data, and discard outlying phenotype values. I
 # create binary covariates from some of the categorical phenotypes.
 cat("Loading phenotype data.\n")
-pheno <- read.pheno("../data/pheno.11jan2015.csv")
+pheno <- read.pheno("pheno.csv")
 pheno <- prepare.pheno(pheno)
 pheno <- cbind(pheno,
                binary.from.categorical(pheno$FCbox,paste0("FCbox",1:4)),
