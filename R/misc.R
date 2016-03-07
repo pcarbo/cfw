@@ -26,9 +26,12 @@ caterase <- function (s)
   cat(s,rep("\b",nchar(s)),sep="")
 
 # ----------------------------------------------------------------------
-# Return the logit of x (using the base-10 logarithm).
-logit10 <- function (x)
-  log10((x + eps)/(1 - x + eps))
+# Return the logit of x. (Here we use the base-10 logarithm instead of the 
+# more commonly used natural logarithm.)
+logit10 <- function (x) {
+  eps <- .Machine$double.eps
+  return(log10((x + eps)/(1 - x + eps)))
+}
 
 # ----------------------------------------------------------------------
 # Return x projected onto interval [a,b].
@@ -38,9 +41,10 @@ project.onto.interval <- function (x, a, b)
 # ----------------------------------------------------------------------
 # Center the columns of matrix X so that the entries in each column
 # of X add up to 0.
+# 
 center.columns <- function (X) {
-  mu <- matrix(colMeans(X),1,ncol(X))
-  X  <- X - repmat(mu,nrow(X),1)
+  y <- matrix(colMeans(X),1,ncol(X))
+  X <- X - y
   return(X)
 }
 
