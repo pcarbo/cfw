@@ -1,5 +1,9 @@
 # Map QTLs for phenotypes measured in CFW outbred mice using the linear
 # mixed model (LMM) analysis implemented in GEMMA.
+#
+# TO DO: Add more details here about what this script does, and how to
+# use this script.
+#
 library(qtl)
 library(data.table)
 source("misc.R")
@@ -10,7 +14,7 @@ source("qtl.analyses.R")
 
 # SCRIPT PARAMETERS
 # -----------------
-which.analysis <- "EDL2"
+which.analysis <- "testes"
 chromosomes    <- NULL
 incl.markers   <- NULL
 gemmadir       <- "gemma_out"
@@ -18,6 +22,7 @@ resultdir      <- "/Users/pcarbo"
 gemma.exe      <- "~/shyamg/bin/gemma"
 num.perms      <- 0
 seed           <- 1
+results.file   <- "gwscan.RData"
 
 # Get the phenotype and covariates used in the QTL mapping.
 analysis   <- analyses[[which.analysis]]
