@@ -1,25 +1,23 @@
 # SUMMARY
 # -------
 # This file contains several functions for reading the QTL experiment
-# data from files in comma-delimited ("csv") format. Here is an overview 
-# of the functions defined in this file:
+# data from text files. Here is an overview of the functions defined
+# in this file:
 #
 #   read.pheno(file)
-#   read.pheno.ox(file)
-#   read.sequenom(map.file,geno.file)
 #   read.map(file)
 #   read.geno(file,numsnps)
 #
 # FUNCTION DEFINITIONS
 # ----------------------------------------------------------------------
-# Returns a data frame containing the phenotype data stored in a CSV file.
+# Loads the phenotype data stored in a CSV file.
 read.pheno <- function (file) {
     
-  # Read in the phenotype data from the .csv file. 
-  pheno <- read.csv(file,quote = "",header = TRUE,comment.char = "#",
-                    stringsAsFactors = FALSE,check.names = FALSE)
+  # Read in the phenotype data from the CSV file. 
+  pheno <- read.csv(file,quote = "",header = TRUE,check.names = FALSE,
+                    stringsAsFactors = FALSE)
   
-  # Convert several columns to factors.
+  # Convert some of the columns to factors.
   pheno <- transform(pheno,
                      id            = as.character(id),
                      round         = factor(round,paste0("SW",1:25)),
@@ -33,7 +31,7 @@ read.pheno <- function (file) {
                      abnormalbone  = factor(abnormalbone),
                      experimenters = factor(experimenters))
 
-  # Convert several columns to double precision.
+  # Convert some of the columns to double precision.
   pheno <- transform(pheno,
                      fastglucose       = as.double(fastglucose),
                      D1totaldist0to15  = as.double(D1totaldist0to15),
@@ -66,78 +64,9 @@ read.pheno <- function (file) {
                      D3TOTDIST20 = as.double(D3TOTDIST20),
                      D3TOTDIST25 = as.double(D3TOTDIST25),
                      D3TOTDIST30 = as.double(D3TOTDIST30))
-  
-  # Discard the data.table attributes.
-  class(pheno)  <- "data.frame"
 
   # Return the phenotype data table.
   return(pheno)
-}
-
-# ----------------------------------------------------------------------
-# Returns a data frame containing the Oxford phenotype data stored in
-# a CSV file.
-read.pheno.ox <- function (file) {
-  pheno <- read.csv(file,header = TRUE,quote = "",check.names = FALSE,
-                    stringsAsFactors = FALSE,comment.char = "#")
-
-  # Convert several columns to factors.
-  pheno <- transform(pheno,
-                     batch = factor(batch),
-                     sex   = factor(sex,c("F","M")),
-                     FCbox = factor(FCbox,paste0("Box",1:4)))
-
-  return(pheno)
-}
-
-# ----------------------------------------------------------------------
-# Returns a list containing three elements: the SNPs for which we have
-# obtained Sequenom genotype data; the Sequenom genotype data
-# corresponding to these SNPs; and the batch number for each DNA
-# sample shipped to Sequenom. You must supply pathnames of two CSV
-# files: the "map" file containing the SNP information (map.file), and
-# the genotype data file (geno.file).
-read.sequenom <- function (map.file, geno.file) {
-  bases <- c("A","T","G","C")
-  
-  # Load the SNP data. Note that I set the reference and alternative
-  # allele columns manually so that the factor levels correspond, in
-  # order, to the bases A, T, G, C. Here I'm assuming that the first
-  # 30 lines of the file are comments (lines beginning with #).
-  map <- transform(fread(map.file,sep = ",",header = TRUE,
-                         stringsAsFactors = FALSE,skip = 33),
-                   chr     = factor(chr,1:19),
-                   ref     = factor(ref,bases),
-                   alt     = factor(alt,bases),
-                   discard = factor(discard))
-
-  # Load the genotype data. Here I'm assuming that the first 13 lines
-  # are comments (lines beginning with #).
-  geno <- transform(fread(geno.file,sep = ",",header = TRUE,
-                          stringsAsFactors = FALSE,skip = 13),
-                    batch = factor(batch))
-
-  # Discard the data.table attributes.
-  class(map)  <- "data.frame"
-  class(geno) <- "data.frame"
-  
-  # Extract the batch number for each sample, and set the row names to
-  # be the sample IDs.
-  batch          <- geno$batch
-  rownames(geno) <- geno$id
-  names(batch)   <- geno$id
-  geno           <- geno[-(1:2)]
-  
-  # Convert the genotypes to genotype counts; specifically, the number
-  # of alternative alleles that appear in the genotype. Repeat for
-  # each marker.
-  for (i in 1:ncol(geno))
-    geno[[i]] <- with(map,genotypes2counts(geno[[i]],ref[i],alt[i]))
-  
-  # Return a list containing three elements: the SNP data ("map"), the
-  # genotype data ("geno"), and a vector indicating which batch each
-  # sample comes from ("batch").
-  return(list(map = map,geno = geno,batch = batch))
 }
 
 # ----------------------------------------------------------------------

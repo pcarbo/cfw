@@ -1,6 +1,5 @@
 # Map QTLs for phenotypes measured in CFW outbred mice using the linear
 # mixed model (LMM) analysis implemented in GEMMA.
-library(abind)
 library(qtl)
 library(data.table)
 source("misc.R")
