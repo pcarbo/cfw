@@ -78,13 +78,14 @@ testis = list(pheno="testisweight",cov="sacweight",
 
 # FEAR CONDITIONING TRAITS
 # ------------------------
+    
 # For all fear conditioning traits, the cage used for testing appears
-# to have an effect on the phenotype, so I include binary indicators
-# for cage ("FCbox1", "FCbox2", "FCbox3") as covariates for all FC
-# phenotypes. Further, the FC phenotype measurements in Round SW17
-# show a noticeably different distribution in the FC phenotypes from
-# the other rounds, so I include a binary indicator for round SW17 as
-# a covariate in all FC traits.
+# to have an effect on the phenotype, so we include binary indicators
+# for cage as covariates for all FC phenotypes. Further, the FC
+# phenotype measurements in Round SW17 show a noticeably different
+# distribution in the FC phenotypes from the other rounds, so we
+# include a binary indicator for round SW17 as a covariate in all FC
+# traits.
 #
 # These analyses control for proportion of freezing on day 1 during
 # exposure to the tone ("AvToneD1"). AvToneD1 explains 11-25% of the
@@ -94,26 +95,22 @@ testis = list(pheno="testisweight",cov="sacweight",
 # AvToneD1 because the distribution for this trait is no longer quite
 # so bimodal, and looks fairly "normal". So there is no need to map
 # QTLs for the binary version of this trait.
-d2ctxt = list(pheno="AvContextD2",outliers=NULL,
-              cov=c("AvToneD1","FCbox1","FCbox2","FCbox3","SW17")),
-d3altc = list(pheno="AvAltContextD3",outliers=function (x) x > 1,
-              cov=c("AvToneD1","FCbox1","FCbox2","FCbox3","SW17")),
-d3tone = list(pheno="AvToneD3",outliers=NULL,
-              cov=c("AvToneD1","FCbox1","FCbox2","FCbox3","SW17")),
-extinct = list(pheno="D3.360",outliers=NULL,
-               cov=c("D3.180","FCbox1","FCbox2","FCbox3","SW17")),
-
-# ADDED FEAR CONDITIONING TRAITS
-# These were added by Shyam fo inclusion in the mega analysis bit.
+#
 # PreTrainD1 is a very ugly trait with massive box effects and a lot
 # of low values, which might have to be removed as outliers. It is
 # quite likely that these outliers represent the "deaf" mice that
-# might be skewing the whole results.  These outliers are present in
-# every box, so not a box specific effect. ARGH!!!!
-pretraind1    = list(pheno="PreTrainD1",cov=c("FCbox1","FCbox2","FCbox3",
-                     "SW10","SW16","SW17","SW20"),outliers=NULL),
-d1avtone      = list(pheno="AvToneD1",cov=c("FCbox1","FCbox2","FCbox3",
-                     "SW10","SW7","SW14","SW20"),outliers=NULL),
+# might be skewing the whole results. These outliers are present in
+# every box, so not a box-specific effect.
+d2ctxt     = list(pheno="AvContextD2",outliers=NULL,
+                  cov=c("AvToneD1","FCbox1","FCbox2","FCbox3","SW17")),
+d3altc     = list(pheno="AvAltContextD3",outliers=function (x) x > 1,
+                  cov=c("AvToneD1","FCbox1","FCbox2","FCbox3","SW17")),
+d3tone     = list(pheno="AvToneD3",outliers=NULL,
+                  cov=c("AvToneD1","FCbox1","FCbox2","FCbox3","SW17")),
+pretraind1 = list(pheno="PreTrainD1",outliers=NULL,
+               cov=c("FCbox1","FCbox2","FCbox3","SW10","SW16","SW17","SW20")),
+d1avtone   = list(pheno="AvToneD1",outliers=NULL,
+               cov=c("FCbox1","FCbox2","FCbox3","SW10","SW7","SW14","SW20")),
 
 # LOCOMOTOR TRAITS
 # The 5 minute activity bins from the meth sensitivity tests
