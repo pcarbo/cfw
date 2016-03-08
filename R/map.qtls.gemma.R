@@ -14,7 +14,7 @@ source("qtl.analyses.R")
 
 # SCRIPT PARAMETERS
 # -----------------
-which.analysis <- "testes"
+which.analysis <- "testis"
 chromosomes    <- NULL
 incl.markers   <- NULL
 gemmadir       <- "gemma_out"

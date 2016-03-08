@@ -1,20 +1,19 @@
-# This data structure provides information about each QTL analysis to
-# perform. Each list element of "analyses" is a list with the
-# following list elements: "pheno", the phenotype or trait to map;
-# "cov", the covariates to include in the regression model of the
-# phenotype; "outliers", specification of the data points to remove
-# according to the residuals after removing the effects of the
-# covariates; and "file", the RData file where the results will be
-# saved.
+# This data structure provides information about each QTL
+# analysis. Each analysis is specified by the following 3 parameters:
+#
+#   pheno     phenotype or trait to map
+#   cov       covariates included in regression model
+#   outliers  data points to remove according to their residuals
+#             after removing linear effects of covariates.
+#
+# See comments below for additional details on the QTL analyses.
 analyses <- list(
     
-# MUSCLE + BONE TRAITS.
+# MUSCLE AND BONE TRAITS
+# ----------------------
 # For all five muscle weights (TA, EDL, soleus, plantaris and
-# gastrocnemius), I map QTLs for these traits in three different ways:
-# (1) with no covariates; (2) conditioning on tibia length ("tibia");
-# and (3) conditioning on both tibia length and body weight
-# ("sacweight"). For tibia length, I map QTLs conditioned on body
-# weight.
+# gastrocnemius), we map QTLs conditioning on tibia length
+# ("tibia"). For tibia length, we map QTLs conditioned on body weight.
 #
 # Tibia length explains 12-18% of variance in the muscle weights. The
 # rationale for including tibia length as a covariate is bone length
@@ -22,53 +21,32 @@ analyses <- list(
 # isolate the genetic factors that directly regulate development of
 # the muscle tissues.
 #  
-# For bone-mineral density (BMD), I created a binary trait that
-# signals "abnormal" bone-mineral density. I do not include any
-# covariates when mapping QTLs for these traits. Ari suggested that I
-# try controlling for tibia length and gastroc weight, but each of
-# these traits do *not* appear to be correlated with BMD, at least
-# based on the data we have. Body weight is also uncorrelated with
-# BMD.
+# For bone-mineral density (BMD), we created a binary trait that
+# signals "abnormal" BMD. We do not include any covariates when
+# mapping QTLs for these traits. Note that body weight is also
+# uncorrelated with BMD.
 # 
-# For all the muscle and bone traits, I include a binary indicator for
+# For all muscle and bone traits, we include a binary indicator for
 # round SW16 as a covariate because the mice from this round showed
-# substantial deviation in these traits from the rest of the mice.
-TA1      = list(pheno="TA",cov="SW16",
-                outliers=function (x) x < (-20) | x > 20),
-TA2      = list(pheno="TA",cov=c("SW16","tibia"),
-                outliers=function (x) x < (-18)),
-TA3      = list(pheno="TA",cov=c("SW16","tibia","sacweight"),
-                outliers=function (x) x < (-15) | x > 15),
-EDL1     = list(pheno="EDL",cov="SW16",
-                outliers=function (x) x < (-4) | x > 4),
-EDL2     = list(pheno="EDL",cov=c("SW16","tibia"),
-                outliers=function (x) x < (-5) | x > 4),
-EDL3     = list(pheno="EDL",cov=c("SW16","tibia","sacweight"),
-                outliers=function (x) x < (-4) | x > 4)),
-soleus1  = list(pheno="soleus",cov="SW16",
-                outliers=function (x) x < (-4) | x > 4),
-soleus2  = list(pheno="soleus",cov=c("SW16","tibia"),
-                outliers=function (x) x < (-4) | x > 4),
-soleus3  = list(pheno="soleus",cov=c("SW16","tibia","sacweight"),
-                outliers=function (x) x < (-3.5) | x > 3.5),
-plant1   = list(pheno="plantaris",cov="SW16",
-                outliers=function (x) x < (-8) | x > 8),
-plant2   = list(pheno="plantaris",cov=c("SW16","tibia"),
-                outliers=function (x) x < (-9) | x > 8),
-plant3   = list(pheno="plantaris",cov=c("SW16","tibia","sacweight"),
-                outliers=function (x) x < (-8) | x > 7),
-gastroc1 = list(pheno="gastroc",cov="SW16",
-                outliers=function (x) x < (-50) | x > 50),
-gastroc2 = list(pheno="gastroc",cov=c("SW16","tibia"),
-                outliers=function (x) x < (-40) | x > 50),
-gastroc3 = list(pheno="gastroc",cov=c("SW16","tibia","sacweight"),
-                outliers=function (x) x < (-40) | x > 40),
-tibia    = list(pheno="tibia",cov=c("SW6","SW16","sacweight"),
-                outliers=function (x) x < (-1.5)),
-BMD      = list(pheno="BMD",cov="SW16",outliers=function (x) x > 0.14),
-abBMD    = list(pheno="abBMD",cov="SW16",outliers=NULL),
+# substantial deviation in these traits compared to the rest of the
+# mice.
+TA      = list(pheno="TA",cov=c("SW16","tibia"),
+               outliers=function (x) x < (-18)),
+EDL     = list(pheno="EDL",cov=c("SW16","tibia"),
+               outliers=function (x) x < (-5) | x > 4),
+soleus  = list(pheno="soleus",cov=c("SW16","tibia"),
+               outliers=function (x) x < (-4) | x > 4),
+plant   = list(pheno="plantaris",cov=c("SW16","tibia"),
+               outliers=function (x) x < (-9) | x > 8),
+gastroc = list(pheno="gastroc",cov=c("SW16","tibia"),
+               outliers=function (x) x < (-40) | x > 50),
+tibia   = list(pheno="tibia",cov=c("SW6","SW16","sacweight"),
+               outliers=function (x) x < (-1.5)),
+BMD     = list(pheno="BMD",cov="SW16",outliers=function (x) x > 0.14),
+abBMD   = list(pheno="abBMD",cov="SW16",outliers=NULL),
 
-# OTHER PHYSIOLOGICAL TRAITS.
+# OTHER PHYSIOLOGICAL TRAITS
+# --------------------------
 # Here I have various other physiological traits, including body
 # weight, testes weight, tail length and fasting glucose levels.
 # 
