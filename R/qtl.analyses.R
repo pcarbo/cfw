@@ -238,31 +238,25 @@ D3vact0to30 = list(pheno="D3vact0to30",
                          "methcage11","methcage12"),
                    outliers=function (x) x > 1.5),
 
-# PREPULSE INHIBITION (PPI) PHENOTYPES.
+# PREPULSE INHIBITION (PPI) PHENOTYPES
+# ------------------------------------
 # All boxes appear to have some effect on some of the PPI phenotypes,
 # with Box #3 having a particularly large effect on some phenotypes,
-# so I include all PPI box indicators as covariates in analysis of the
+# so we include all PPI box indicators as covariates in analysis of the
 # PPI phenotypes.
 #
-# I also map QTLs for habituation to the pulses by analyzing the
-# startle response during the fourth block of pulse-alone trials
-# against the startle response during the first block of pulse-alone
-# trials.
-pp3PPIavg = list(pheno="pp3PPIavg",
-                  cov=c("PPIbox1","PPIbox2","PPIbox3","PPIbox4"),
-                  outliers=function (x) x < (-0.9)),
-pp6PPIavg  = list(pheno="pp6PPIavg",
-                  cov=c("PPIbox1","PPIbox2","PPIbox3","PPIbox4"),
-                  outliers=function (x) x < (-1.1)),
-pp12PPIavg = list(pheno="pp12PPIavg",
-                  cov=c("PPIbox1","PPIbox2","PPIbox3","PPIbox4"),
-                  outliers=function (x) x < (-1)),
-PPIavg     = list(pheno="PPIavg",
-                  cov=c("PPIbox1","PPIbox2","PPIbox3","PPIbox4"),
-                  outliers=function (x) x < (-1)),
-PPIstartle = list(pheno="startle",
-                  cov=c("PPIbox1","PPIbox2","PPIbox3","PPIbox4"),
-                  outliers=function (x) x > 250),
-PPIhabit   = list(pheno="p120b4",
-                  cov=c("p120b1","PPIbox1","PPIbox2","PPIbox3","PPIbox4"),
-                  outliers=function (x) x < (-140) | x > (140)))
+# We also map QTLs for habituation to pulses by analyzing the startle
+# response during the fourth block of pulse-alone trials against the
+# startle response during the first block of pulse-alone trials.
+pp3PPIavg  = list(pheno="pp3PPIavg",outliers=function (x) x < (-0.9),
+                   cov=c("PPIbox1","PPIbox2","PPIbox3","PPIbox4")),
+pp6PPIavg  = list(pheno="pp6PPIavg",outliers=function (x) x < (-1.1),
+                  cov=c("PPIbox1","PPIbox2","PPIbox3","PPIbox4")),
+pp12PPIavg = list(pheno="pp12PPIavg",outliers=function (x) x < (-1),
+                  cov=c("PPIbox1","PPIbox2","PPIbox3","PPIbox4")),
+PPIavg     = list(pheno="PPIavg",outliers=function (x) x < (-1),
+                  cov=c("PPIbox1","PPIbox2","PPIbox3","PPIbox4")),
+PPIstartle = list(pheno="startle",outliers=function (x) x > 250,
+                  cov=c("PPIbox1","PPIbox2","PPIbox3","PPIbox4")),
+PPIhabit   = list(pheno="p120b4",outliers=function (x) x < (-140) | x > (140),
+                  cov=c("p120b1","PPIbox1","PPIbox2","PPIbox3","PPIbox4")))
