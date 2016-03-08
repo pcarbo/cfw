@@ -78,7 +78,6 @@ testis = list(pheno="testisweight",cov="sacweight",
 
 # FEAR CONDITIONING TRAITS
 # ------------------------
-    
 # For all fear conditioning traits, the cage used for testing appears
 # to have an effect on the phenotype, so we include binary indicators
 # for cage as covariates for all FC phenotypes. Further, the FC
@@ -112,51 +111,24 @@ pretraind1 = list(pheno="PreTrainD1",outliers=NULL,
 d1avtone   = list(pheno="AvToneD1",outliers=NULL,
                cov=c("FCbox1","FCbox2","FCbox3","SW10","SW7","SW14","SW20")),
 
-# LOCOMOTOR TRAITS
-# The 5 minute activity bins from the meth sensitivity tests
-# that are part of the mega analysis project in cohort with
-# Oxford.
-# Meth cage 7 have a very different observations than other testing
-# cages, so it is included as covariate in each of the following
-# traits. Meth cages 9 and 10 show up as explanatory in a few of the
-# traits.
-# Similarly,batch SW13 has a different distribution than the others
-# so included in all the traits. batches
-d1hact5     = list(pheno="d1hact5",cov=c("methcage7","methcage9","methcage10"),
-                   outliers=NULL),
-d1hact10    = list(pheno="d1hact10", cov=c("methcage7", "methcage10"),
-                   outliers=NULL),
-d1hact15    = list(pheno="d1hact15", cov=c("methcage7", "methcage10"),
-                   outliers=NULL),
-d1hact20    = list(pheno="d1hact20", cov=c("methcage7", "methcage10"),
-                   outliers=NULL),
-d1hact25    = list(pheno="d1hact25", cov="methcage7",
-                   outliers=NULL),
-d1hact30    = list(pheno="d1hact30", cov="methcage7",
-                   outliers=NULL),
-d1hactbasal = list(pheno="d1hact30", cov="methcage7",
-                   outliers=NULL),
-d1hactdecay = list(pheno="d1hact30", cov=c("methcage7", "methcage9"),
-                   outliers=NULL),
-
-# METHAMPHETAMINE SENSITIVITY TRAITS.
-# I checked all the cages used in these tests to see whether the
+# METHAMPHETAMINE SENSITIVITY, LOCOMOTOR ACTIVITY AND ANXIETY-LIKE BEHAVIOR 
+# -------------------------------------------------------------------------
+# We checked all the cages used in these tests to see whether the
 # phenotypes measured using any given cage departed noticeably from
-# the other cages, and only cage #7 does, so I include a binary
-# indicator for this cage in all my analyses of the methamphetamine
-# sensitivity phenotypes.
-d1dist0to30 = list(pheno="D1totaldist0to30",cov="methcage7",
-                   outliers=function (x) x < (-3500) | x > 4000),
+# the other cages. Cage #7 consistently has a large effect.
 d1dist0to15 = list(pheno="D1totaldist0to15",cov="methcage7",
                    outliers=function (x) x < (-2000) | x > 2200),
-d2dist0to30 = list(pheno="D2totaldist0to30",cov="methcage7",
-                   outliers=function (x) x > 4500),
 d2dist0to15 = list(pheno="D2totaldist0to15",cov="methcage7",
                    outliers=function (x) x < (-2000) | x > 2500),
-d3dist0to30 = list(pheno="D3totaldist0to30",cov="methcage7",
-                   outliers=function (x) x > 20000),
 d3dist0to15 = list(pheno="D3totaldist0to15",cov="methcage7",
                    outliers=function (x) x > 8500),
+d1dist0to30 = list(pheno="D1totaldist0to30",cov="methcage7",
+                   outliers=function (x) x < (-3500) | x > 4000),
+d2dist0to30 = list(pheno="D2totaldist0to30",cov="methcage7",
+                   outliers=function (x) x > 4500),
+d3dist0to30 = list(pheno="D3totaldist0to30",cov="methcage7",
+                   outliers=function (x) x > 20000),
+    
 d1totdist5  = list(pheno="D1TOTDIST5",cov="methcage7",
                    outliers=function (x) x < (-1000) | x > 1000),
 d1totdist10 = list(pheno="D1TOTDIST10",cov="methcage7",
@@ -169,6 +141,7 @@ d1totdist25 = list(pheno="D1TOTDIST25",cov="methcage7",
                    outliers=function (x) x < (-750) | x > 750),
 d1totdist30 = list(pheno="D1TOTDIST30",cov="methcage7",
                    outliers=function (x) x > 700),
+    
 d2totdist5  = list(pheno="D2TOTDIST5",cov="methcage7",
                    outliers=function (x) x < (-1250) | x > 1250),
 d2totdist10 = list(pheno="D2TOTDIST10",cov="methcage7",
@@ -177,9 +150,11 @@ d2totdist15 = list(pheno="D2TOTDIST15",cov="methcage7",
                    outliers=function (x) x > 850),
 d2totdist20 = list(pheno="D2TOTDIST20",cov="methcage7",
                    outliers=function (x) x > 1000),
-d2totdist25 = list(pheno="D2TOTDIST25",cov="methcage7",outliers=NULL),
+d2totdist25 = list(pheno="D2TOTDIST25",cov="methcage7",
+                   outliers=NULL),
 d2totdist30 = list(pheno="D2TOTDIST30",cov="methcage7",
                    outliers=function (x) x > 900),
+    
 d3totdist5  = list(pheno="D3TOTDIST5",cov="methcage7",
                    outliers=function (x) x > 2000),
 d3totdist10 = list(pheno="D3TOTDIST10",cov="methcage7",
@@ -192,6 +167,7 @@ d3totdist25 = list(pheno="D3TOTDIST25",cov="methcage7",
                    outliers=function (x) x > 4500),
 d3totdist30 = list(pheno="D3TOTDIST30",cov="methcage7",
                    outliers=function (x) x > 3750),
+    
 D1ctrtime0to15 = list(pheno="D1ctrtime0to15",cov="methcage7",
                       outliers=function (x) x < (-0.5)),
 D2ctrtime0to15 = list(pheno="D2ctrtime0to15",cov="methcage7",
@@ -208,34 +184,27 @@ D3ctrtime0to30 = list(pheno="D3ctrtime0to30",cov="methcage7",
 D1hact0to15 = list(pheno="D1hact0to15",cov="methcage7",outliers=NULL),
 D2hact0to15 = list(pheno="D2hact0to15",cov="methcage7",outliers=NULL),
 D3hact0to15 = list(pheno="D3hact0to15",cov="methcage7",outliers=NULL),
-
 D1hact0to30 = list(pheno="D1hact0to30",cov="methcage7",outliers=NULL),
 D2hact0to30 = list(pheno="D2hact0to30",cov="methcage7",outliers=NULL),
 D3hact0to30 = list(pheno="D3hact0to30",cov="methcage7",outliers=NULL),
 
-D1vact0to15 = list(pheno="D1vact0to15",
-                   cov=c("methcage7","methcage8","methcage9","methcage10",
-                         "methcage11","methcage12"),
+D1vact0to15 = list(pheno="D1vact0to15",cov=c("methcage7","methcage8",
+                   "methcage9","methcage10","methcage11","methcage12"),
                    outliers=function (x) x < (-0.85) | x > 0.85),
-D2vact0to15 = list(pheno="D2vact0to15",
-                   cov=c("methcage7","methcage8","methcage9","methcage10",
-                         "methcage11","methcage12"),
+D2vact0to15 = list(pheno="D2vact0to15",cov=c("methcage7","methcage8",
+                   "methcage9","methcage10","methcage11","methcage12"),
                    outliers=function (x) x < (-1) | x > 1),
-D3vact0to15 = list(pheno="D3vact0to15",
-                   cov=c("methcage7","methcage8","methcage9","methcage10",
-                         "methcage11","methcage12"),
+D3vact0to15 = list(pheno="D3vact0to15",cov=c("methcage7","methcage8",
+                   "methcage9","methcage10","methcage11","methcage12"),
                    outliers=function (x) x < (-1.25) | x > 1.25),
-D1vact0to30 = list(pheno="D1vact0to30",
-                   cov=c("methcage7","methcage8","methcage9","methcage10",
-                         "methcage11","methcage12"),
+D1vact0to30 = list(pheno="D1vact0to30",cov=c("methcage7","methcage8",
+                   "methcage9","methcage10","methcage11","methcage12"),
                    outliers=function (x) x < (-1) | x > 1),
-D2vact0to30 = list(pheno="D2vact0to30",
-                   cov=c("methcage7","methcage8","methcage9","methcage10",
-                         "methcage11","methcage12"),
+D2vact0to30 = list(pheno="D2vact0to30",cov=c("methcage7","methcage8",
+                   "methcage9","methcage10","methcage11","methcage12"),
                    outliers=function (x) x < (-1) | x > 1),
-D3vact0to30 = list(pheno="D3vact0to30",
-                   cov=c("methcage7","methcage8","methcage9","methcage10",
-                         "methcage11","methcage12"),
+D3vact0to30 = list(pheno="D3vact0to30",cov=c("methcage7","methcage8",
+                   "methcage9","methcage10","methcage11","methcage12"),
                    outliers=function (x) x > 1.5),
 
 # PREPULSE INHIBITION (PPI) PHENOTYPES
