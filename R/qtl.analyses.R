@@ -47,55 +47,37 @@ abBMD   = list(pheno="abBMD",cov="SW16",outliers=NULL),
 
 # OTHER PHYSIOLOGICAL TRAITS
 # --------------------------
-# Here I have various other physiological traits, including body
-# weight, testes weight, tail length and fasting glucose levels.
-# 
-# BODY WEIGHTS: Body weights bw1, bw2 and bw3 were measured on
-# subsequent days of the methamphetamine sensitivity tests, and are
-# highly correlated with each other (r^2 = 98%), and as well as with
-# PPI weight and sacweight, so I only map QTLs for the "bw0" and
-# "sacweight" body weight measurements. The body weight measurements
-# after sacrifice ("sacweight") show a considerable departure in Round
-# SW17, so I include a binary indicator for this round as a covariate
-# for sacweight.
+# Body weights bw1, bw2 and bw3 were measured on subsequent days of
+# the methamphetamine sensitivity tests, and are highly correlated
+# with each other (r^2 = 98%), so it is only necessary to map QTLs for
+# one of them. The body weight measurements after sacrifice
+# ("sacweight") show a considerable departure in Round SW17, so we
+# include a binary indicator for this round as a covariate for
+# sacweight. We include age as a covariate for the "bw0" body weight
+# because it was measured while the mouse was still growing.
 #
-# I include age as a covariate for the "bw0" body weight because it
-# was measured while the mouse was still growing, so would obviously
-# depend on the age at which the body weight was taken.
-#
-# GLUCOSE LEVELS: Fasting glucose levels are explained partially by
-# body weight (PVE = 6%), so I include body weight as a covariate for
-# fasting glucose levels. Rounds SW1 and SW11 showed a considerable
-# departure in fasting glucose levels from the other rounds, so I
-# included binary indicators for these two rounds as a covariate for
-# fasting glucose levels.
-fastgl = list(pheno="fastglucose",cov=c("SW1","SW11","bw0"),
-              outliers=function (x) x < (-60) | x > 60),
-tail   = list(pheno="taillength",cov=c("bw0","glucoseage","SW3","SW4",
-              "SW19","SW20","SW22","SW24"),outliers = NULL),
-testis = list(pheno="testisweight",cov="sacweight",
-              outliers=function (x) x < (-0.075)),
+# Fasting glucose levels are explained partially by body weight (PVE =
+# 6%), so we include body weight as a covariate for fasting glucose
+# levels. Rounds SW1 and SW11 showed a considerable departure in
+# fasting glucose levels from the other rounds, so we included binary
+# indicators for these two rounds as covariates for fasting glucose
+# levels.
 bw0    = list(pheno="bw0",cov="glucoseage",
               outliers=function (x) x < (-8.5) | x > 8.5),
 bw1    = list(pheno="bw1",cov=c("methage","SW17"),
               outliers=function (x) x < (-9) | x > 10),
 ppiwt  = list(pheno="PPIweight",cov="SW17",outliers=NULL),
 sacwt  = list(pheno="sacweight",cov="SW17",outliers=NULL),
+fastgl = list(pheno="fastglucose",cov=c("SW1","SW11","bw0"),
+              outliers=function (x) x < (-60) | x > 60),
+tail   = list(pheno="taillength",outliers = NULL,
+              cov=c("bw0","glucoseage","SW3","SW4","SW19","SW20","SW22",
+                    "SW24")),
+testis = list(pheno="testisweight",cov="sacweight",
+              outliers=function (x) x < (-0.075)),
 
-# New Trait derived from the sacwt and tibia length
-# sacwt.tibia.length = sacwt/tibia^2
-#
-# The distribution of the values is all over the place with respect to
-# the batches, I use all the batches that have a p-value (wald) < 0.001
-# in a model with all the batches as covariates. Push comes to shove, only
-# SW17 is really very different from the overall mean, but others show reasonable
-# deviation from the grand mean.
-sacwt.bmi.tibia =
-  list(pheno="sacwt.bmi.tibia",
-       cov = c("SW1","SW2","SW6","SW9","SW10","SW17"),
-       outliers=function(x) x > 0.044),
-
-# FEAR CONDITIONING TRAITS.
+# FEAR CONDITIONING TRAITS
+# ------------------------
 # For all fear conditioning traits, the cage used for testing appears
 # to have an effect on the phenotype, so I include binary indicators
 # for cage ("FCbox1", "FCbox2", "FCbox3") as covariates for all FC
@@ -116,7 +98,7 @@ d2ctxt = list(pheno="AvContextD2",outliers=NULL,
               cov=c("AvToneD1","FCbox1","FCbox2","FCbox3","SW17")),
 d3altc = list(pheno="AvAltContextD3",outliers=function (x) x > 1,
               cov=c("AvToneD1","FCbox1","FCbox2","FCbox3","SW17")),
-d3tone = list(pheno="AvToneD3",outliers=NULL),
+d3tone = list(pheno="AvToneD3",outliers=NULL,
               cov=c("AvToneD1","FCbox1","FCbox2","FCbox3","SW17")),
 extinct = list(pheno="D3.360",outliers=NULL,
                cov=c("D3.180","FCbox1","FCbox2","FCbox3","SW17")),
@@ -237,11 +219,11 @@ D3hact0to30 = list(pheno="D3hact0to30",cov="methcage7",outliers=NULL),
 D1vact0to15 = list(pheno="D1vact0to15",
                    cov=c("methcage7","methcage8","methcage9","methcage10",
                          "methcage11","methcage12"),
-                   outliers=function (x) x < (-0.85) | x > 0.85,
+                   outliers=function (x) x < (-0.85) | x > 0.85),
 D2vact0to15 = list(pheno="D2vact0to15",
                    cov=c("methcage7","methcage8","methcage9","methcage10",
                          "methcage11","methcage12"),
-                   outliers=function (x) x < (-1) | x > 1,
+                   outliers=function (x) x < (-1) | x > 1),
 D3vact0to15 = list(pheno="D3vact0to15",
                    cov=c("methcage7","methcage8","methcage9","methcage10",
                          "methcage11","methcage12"),
@@ -249,7 +231,7 @@ D3vact0to15 = list(pheno="D3vact0to15",
 D1vact0to30 = list(pheno="D1vact0to30",
                    cov=c("methcage7","methcage8","methcage9","methcage10",
                          "methcage11","methcage12"),
-                   outliers=function (x) x < (-1) | x > 1,
+                   outliers=function (x) x < (-1) | x > 1),
 D2vact0to30 = list(pheno="D2vact0to30",
                    cov=c("methcage7","methcage8","methcage9","methcage10",
                          "methcage11","methcage12"),
@@ -274,7 +256,7 @@ pp3PPIavg = list(pheno="pp3PPIavg",
                   outliers=function (x) x < (-0.9)),
 pp6PPIavg  = list(pheno="pp6PPIavg",
                   cov=c("PPIbox1","PPIbox2","PPIbox3","PPIbox4"),
-                  outliers=function (x) x < (-1.1),
+                  outliers=function (x) x < (-1.1)),
 pp12PPIavg = list(pheno="pp12PPIavg",
                   cov=c("PPIbox1","PPIbox2","PPIbox3","PPIbox4"),
                   outliers=function (x) x < (-1)),
@@ -286,4 +268,4 @@ PPIstartle = list(pheno="startle",
                   outliers=function (x) x > 250),
 PPIhabit   = list(pheno="p120b4",
                   cov=c("p120b1","PPIbox1","PPIbox2","PPIbox3","PPIbox4"),
-                  outliers=function (x) x < (-140) | x > (140))
+                  outliers=function (x) x < (-140) | x > (140)))
