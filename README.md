@@ -4,11 +4,6 @@ R code implementing QTL mapping of physiological, behavioral and gene
 expression phenotypes in Carworth Farms White (CFW) outbred mice. *A
 few more details will go here.*
 
-*More details to include in README:*
-
-+ License.
-+ Contributors.
-
 ###Citing this resource
 
 *Details go here.*
@@ -35,20 +30,30 @@ Department of Human Genetics, University of Chicago<br>
 and AncestryDNA, San Francisco, California<br>
 2016
 
-[Shyam Gopalakrishnan]
+and
+
+[Shyam Gopalakrishnan](http://www.google.com)<br>
 Department of Human Genetics, University of Chicago<br>
 and ...
 2016
 
-Abraham Palmer and Clarissa Parker (*and others?*) have also
-contributed to the development of this software.
+Abraham Palmer and Clarissa Parker (*others?*) have also contributed
+to the development of this software.
 
 ### R scripts and modules
 
 *Brief summary of scripts and modules goes here. This will be better
 organized later.*
 
++ examine.covariates.R: A script to show scatterplots of phenotype
+versus covariate, and calculate the proportion of variance in a
+phenotype interest that is explained by various candidate covariates
+(e.g., body weight).
+
 + misc.R: Defines several functions that don't fit anywhere else.
+
++ plotting.tools.R: Some functions for creating plots to summarize
+results.
 
 + qtl.analyses.R: Defines a data structure that provides information
 about each QTL analysis.
