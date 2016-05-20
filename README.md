@@ -57,6 +57,10 @@ versus covariate, and calculate the proportion of variance in a
 phenotype interest that is explained by various candidate covariates
 (e.g., body weight).
 
++ gen.megamuga.snp.density.plot.R: Script to plot distribution of
+MegaMUGA SNPs that are polymorphic in CFW mice across chromosomes
+1-19.
+
 + misc.R: Defines several functions that don't fit anywhere else.
 
 + plotting.tools.R: Some functions for creating plots to summarize
