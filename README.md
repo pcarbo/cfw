@@ -39,6 +39,11 @@ also contributed to the development of this software.
 *Brief summary of scripts and modules goes here. This will be better
 organized later.*
 
++ check.pheno.R: This is a small script to check the whether the
+observed quantiles for each phenotype, conditioned on different sets
+of covariates, match what we would expect under the normal
+distribution.
+
 + examine.binary.covariates.R: A script to show scatterplots of
 phenotype vs covariate, and calculate the proportion of variance in a
 phenotype of interest that is explained by variance candidate binary
