@@ -15,8 +15,8 @@ read.pheno <- function (file) {
     
   # Read in the phenotype data from the CSV file. 
   pheno <- read.csv(file,quote = "",header = TRUE,check.names = FALSE,
-                    stringsAsFactors = FALSE)
-  
+                    stringsAsFactors = FALSE,comment.char = "#")
+
   # Convert some of the columns to factors.
   pheno <- transform(pheno,
                      id            = as.character(id),

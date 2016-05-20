@@ -2,7 +2,6 @@
 # calculate the proportion of variance in a phenotype interest that is
 # explained by various candidate covariates (e.g., body weight).
 library(lattice)
-library(data.table)
 source("misc.R")
 source("read.data.R")
 source("data.manip.R")
@@ -13,9 +12,9 @@ source("plotting.tools.R")
 # I organize the analyses into "clusters" of phenotypes: muscle and
 # bone traits ("muscle+bone"), body weights ("bw"), other
 # physiological traits ("physio"), fear conditioning phenotypes
-# ("fc"), methamphetamine sensitivity phenotypes ("meth"), and
-# prepulse inhibition phenotypes ("ppi").
-cluster <- "physio"
+# ("fc"), methamphetamine sensitivity phenotypes ("meth"), prepulse
+# inhibition phenotypes ("ppi"), and others (see below).
+cluster <- "muscle+bone"
 
 if (cluster == "muscle+bone") {
 
@@ -61,7 +60,8 @@ if (cluster == "muscle+bone") {
   panel.layout <- list(nrow = 2,ncol = 3)
 } else if (cluster == "physio") {
 
-  # OTHER PHYSIOLOGICAL TRAITS.
+  # OTHER PHYSIOLOGICAL TRAITS
+  # --------------------------
   # Examine fasting glucose levels ("fastglucose"), body weights,
   # testes weight, and tail length.
   panels <-
@@ -79,7 +79,8 @@ if (cluster == "muscle+bone") {
   panel.layout <- list(nrow = 3,ncol = 3)
 } else if (cluster == "fc") {
 
-  # FEAR CONDITIONING TRAITS.
+  # FEAR CONDITIONING TRAITS
+  # ------------------------
   panels <- list(
 AvContextD2a = list(pheno="AvContextD2",   cov="PreTrainD1",col="dodgerblue"),
 AvContextD3a = list(pheno="AvAltContextD3",cov="PreTrainD1",col="dodgerblue"),
@@ -94,7 +95,8 @@ extinction   = list(pheno="D3.360",        cov="D3.180",col="forestgreen"))
   panel.layout <- list(nrow = 3,ncol = 3)
 } else if (cluster == "meth") {
 
-  # METHAMPHETAMINE SENSITIVITY TRAITS.
+  # METHAMPHETAMINE SENSITIVITY TRAITS
+  # ----------------------------------
   panels <- list(d3.0to15a   = list(pheno = "D3totaldist0to15",
                                     cov   = "D1totaldist0to15",
                                     col   = "darkblue"),
@@ -119,7 +121,8 @@ extinction   = list(pheno="D3.360",        cov="D3.180",col="forestgreen"))
   panel.layout <- list(nrow = 3,ncol = 2)
 } else if (cluster == "meth2") {
 
-  # MORE PHENOTYPES FROM METHAMPHETAMINE SENSITIVITY TESTS.
+  # MORE PHENOTYPES FROM METHAMPHETAMINE SENSITIVITY TESTS
+  # ------------------------------------------------------
   panels <- list(
     D1hact0to30 = list(pheno = "D1hact0to30",cov="bw1",col="darkblue"),
     D2hact0to30 = list(pheno = "D2hact0to30",cov="bw1",col="darkblue"),
@@ -150,11 +153,13 @@ extinction   = list(pheno="D3.360",        cov="D3.180",col="forestgreen"))
   trellis.device(height = 4.5,width = 6.25)
   panel.layout <- list(nrow = 3,ncol = 4)
 } else if (cluster == "bmi") {
-    # MORE PHENOTYPES FROM METHAMPHETAMINE SENSITIVITY TESTS.
+    
+    # MORE PHENOTYPES FROM METHAMPHETAMINE SENSITIVITY TESTS
+    # ------------------------------------------------------
     panels <- list(
-    sac.bmi.tibia1 = list(pheno = "sacwt.bmi.tibia",cov="sacweight",col="darkblue"),
-    sac.bmi.tibia2 = list(pheno = "sacwt.bmi.tibia",cov="tibia",col="darkblue"),
-    sac.bmi.tibia4 = list(pheno = "sacwt.bmi.tibia",cov="bw0",col="darkblue"))
+    sac.bmi.tibia1=list(pheno="sacwt.bmi.tibia",cov="sacweight",col="blue"),
+    sac.bmi.tibia2=list(pheno="sacwt.bmi.tibia",cov="tibia",col="blue"),
+    sac.bmi.tibia4=list(pheno="sacwt.bmi.tibia",cov="bw0",col="blue"))
     
     # The panels are arranged on a 2 x 2 grid.
     trellis.device(height = 4.5,width = 2)
@@ -173,7 +178,7 @@ panel.layout <- with(panel.layout,
 
 # Load the phenotype data.
 phenotypes <- unique(sapply(panels,function(x)x$pheno))
-pheno      <- read.pheno("../data/pheno.11jan2015.csv")
+pheno      <- read.pheno("pheno.csv")
 pheno      <- prepare.pheno(pheno)
 
 # Jitter glucoseage for the scatterplots.

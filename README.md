@@ -23,22 +23,12 @@ This program is distributed in the hope that it will be useful, but
 
 ###Credits
 
-The *cfw* code was developed by:
-
-[Peter Carbonetto](http://www.cs.ubc.ca/spider/pcarbo)<br>
-Department of Human Genetics, University of Chicago<br>
-and AncestryDNA, San Francisco, California<br>
-2016
-
-and
-
-[Shyam Gopalakrishnan](http://www.google.com)<br>
-Department of Human Genetics, University of Chicago<br>
-and ...
-2016
-
-Abraham Palmer and Clarissa Parker (*others?*) have also contributed
-to the development of this software.
+The *cfw* code was developed by
+[Peter Carbonetto](http://www.cs.ubc.ca/spider/pcarbo) and
+[Shyam Gopalakrishnan](http://www.google.com).
+[Abraham Palmer](http://palmerlab.org) and
+[Clarissa Parker](http://www.middlebury.edu/academics/neuro/faculty/node/454157)
+also contributed to the development of this software.
 
 ### R scripts and modules
 
