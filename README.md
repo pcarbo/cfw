@@ -4,8 +4,9 @@ R code implementing QTL mapping of physiological, behavioral and gene
 expression phenotypes in Carworth Farms White (CFW) outbred mice. *A
 few more details will go here.*
 
-Some additional details: Tested in R version 3.2.3 on a MacBook Pro
-(2.53 GHz Intel Core 2 Duo, OS X 10.11).
+Some additional details: (1) Tested in R version 3.2.3 on a MacBook
+Pro (2.53 GHz Intel Core 2 Duo, OS X 10.11). (2) Explain where to
+retrieve data necessary to run these analyses/scripts.
 
 ###Citing this resource
 
@@ -37,6 +38,11 @@ also contributed to the development of this software.
 
 *Brief summary of scripts and modules goes here. This will be better
 organized later.*
+
++ examine.binary.covariates.R: A script to show scatterplots of
+phenotype vs covariate, and calculate the proportion of variance in a
+phenotype of interest that is explained by variance candidate binary
+covariates (e.g., testing apparatus).
 
 + examine.covariates.R: A script to show scatterplots of phenotype
 versus covariate, and calculate the proportion of variance in a
