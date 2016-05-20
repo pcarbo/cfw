@@ -44,6 +44,9 @@ phenotype vs covariate, and calculate the proportion of variance in a
 phenotype of interest that is explained by variance candidate binary
 covariates (e.g., testing apparatus).
 
++ examine.bmd.R: A small script to compare the distribution of
+bone-mineral density (BMD) against BMD data from other studies.
+
 + examine.covariates.R: A script to show scatterplots of phenotype
 versus covariate, and calculate the proportion of variance in a
 phenotype interest that is explained by various candidate covariates
