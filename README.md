@@ -39,6 +39,10 @@ also contributed to the development of this software.
 *Brief summary of scripts and modules goes here. This will be better
 organized later.*
 
++ calc.pve.R: Estimate the proportion of variance in the phenotype,
+after removing linear effects of covariates, that is explained
+by the availablegenetic variants.
+
 + check.pheno.R: This is a small script to check the whether the
 observed quantiles for each phenotype, conditioned on different sets
 of covariates, match what we would expect under the normal
@@ -66,8 +70,19 @@ MegaMUGA SNPs that are polymorphic in CFW mice across chromosomes
 + plotting.tools.R: Some functions for creating plots to summarize
 results.
 
++ polygenic.R: This file contains functions that implement the
+polygenic model for estimating the proportion of variance expained
+by available genetic markers. Here is an overview of the functions
+defined in this file:
+
 + qtl.analyses.R: Defines a data structure that provides information
 about each QTL analysis.
 
 + read.data.R: Defines several functions for reading the QTL
 experiment data from text files.
+
+### To do items
+
++ Organize R scripts a bit better.
+
++ Fix loading of genotype data in calc.pve.R.
