@@ -83,6 +83,9 @@ experiment data from text files.
 
 ### To do items
 
++ Verify that map.qtls.gemma.R is working, and clean up code in that
+  script.
+
 + Organize R scripts a bit better.
 
 + Fix loading of genotype data in calc.pve.R.
