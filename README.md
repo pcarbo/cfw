@@ -4,6 +4,9 @@ R code implementing QTL mapping of physiological, behavioral and gene
 expression phenotypes in Carworth Farms White (CFW) outbred mice. *A
 few more details will go here.*
 
+Some additional details: Tested in R version 3.2.3 on a MacBook Pro
+(2.53 GHz Intel Core 2 Duo, OS X 10.11).
+
 ###Citing this resource
 
 *Details go here.*
