@@ -1,19 +1,15 @@
-# This is Peter's script for estimating LD decay in the heterogeneous
-# stock (HS) mice. Relevant publications for the HS data are Valdar et
-# al, Nature Genetics, 2006; Shifman et al, PLoS Biology, 2006.
-#
-# These calculations use the genotype data for 1,940 HS mice
-# downloaded from http://mus.well.ox.ac.uk/mouse/HS. Base-pair
-# positions used in these calculations are from the "sex-averaged"
-# genetic map downloaded from the same webpage. Positions for 9,416
-# SNPs (out of 11745 SNPs total) on autosomal chromosomes are provided
-# in this genetic map. The base-pair positions are based on NCBI
-# release 34 of the mouse genome assembly.
-#
-# We use the --r2 command in PLINK v1.9beta3.33 to compute the r^2
-# measure of LD (see Pritchard and Przeworski, 2001) based on
+# Script for estimating LD decay in the heterogeneous stock (HS)
+# mice. Relevant publications for the HS data are Valdar et al, Nature
+# Genetics, 2006; Shifman et al, PLoS Biology, 2006. These
+# calculations use the genotype data for 1,940 HS mice downloaded from
+# http://mus.well.ox.ac.uk/mouse/HS. Base-pair positions used in these
+# calculations are from the "sex-averaged" genetic map downloaded from
+# the same webpage. Positions for 9,416 SNPs (out of 11745 SNPs total)
+# on autosomal chromosomes are provided in this genetic map. The
+# base-pair positions are based on NCBI release 34 of the mouse genome
+# assembly. The --r2 command in PLINK v1.9beta3.33 is used to compute
+# the r^2 measure of LD (see Pritchard and Przeworski, 2001) based on
 # maximum-likelihood estimates of the haplotype frequences.
-#
 library(data.table)
 
 # SCRIPT PARAMETERS
@@ -25,13 +21,13 @@ bins <- seq(0,5e6,1e5)
 # SNP pairs.
 ns <- 1e4
 
+# Initialize the pseudorandom number generator.
 set.seed(1)
 
 # LOAD SNP INFO
 # -------------
 cat("Loading SNP data.\n")
-map <- read.table("~/Desktop/cfw/HS/chrall_sexaveraged.bim",
-                  stringsAsFactors = FALSE)
+map <- read.table("chrall_sexaveraged.bim",stringsAsFactors = FALSE)
 names(map) <- c("chr","id","dist","pos","A1","A2")
 cat("Loaded SNP data for",nrow(map),"markers.\n")
 
@@ -39,13 +35,13 @@ cat("Loaded SNP data for",nrow(map),"markers.\n")
 # ---------------------------
 cat("Loading SNP allele frequencies")
 out <- NULL
+system("mkdir -p out_plink")
 for (i in 1:19) {
-  geno.file <- sprintf("~/Desktop/cfw/HS/chr%d",i)
-  system(sprintf(paste("~/bin/plink2 --bfile %s --freq --make-founders",
-                       "--out plink/hs"),geno.file))
-  out <- rbind(out,
-               read.table("plink/hs.frq",header = TRUE,
-                          stringsAsFactors = FALSE))
+  geno.file <- sprintf("chr%d",i)
+  system(sprintf(paste("plink2 --bfile %s --freq --make-founders",
+                       "--out out_plink/hs"),geno.file))
+  out <- rbind(out,read.table("out_plink/hs.frq",header = TRUE,
+                              stringsAsFactors = FALSE))
 }
 rownames(out) <- out$SNP
 map <- cbind(map,data.frame(maf = out[map$id,"MAF"]))
@@ -59,9 +55,9 @@ caterase <- function (s)
   cat(s,rep("\b",nchar(s)),sep = "")
 for (i in 1:19) {
   caterase(sprintf("chromosome %d",i))
-  geno.file <- sprintf("~/Desktop/cfw/HS/chr%d",i)
-  out.file  <- sprintf("plink/chr%d",i)
- system(sprintf("~/bin/plink2 --bfile %s --r2 square --make-founders --out %s",
+  geno.file <- sprintf("chr%d",i)
+  out.file  <- sprintf("out_plink/chr%d",i)
+ system(sprintf("plink2 --bfile %s --r2 square --make-founders --out %s",
                 geno.file,out.file),ignore.stdout = TRUE)
   r           <- fread(paste0(out.file,".ld"))
   class(r)    <- "data.frame"
