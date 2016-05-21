@@ -5,14 +5,14 @@ physiological, behavioral and gene expression phenotypes, and other
 data analyses to assess the viability of using Carworth Farms White
 (CFW) mice for mapping genes and genetic loci underlying complex
 traits relevant to the study of human disease and psychology. This
-code accompanies the following publication:
+code repository accompanies the following publication:
 
-  Parker, C.C., Gopalakrishnan, G., Carbonetto, P., Gonzales, N.M.,
-  Leung, E, Park, Y.J., Aryee, E., Davis, J., Blizard, D.A.,
-  Ackert-Bicknell, C.L., Lionikas, A., Pritchard, J.K., Palmer, A.A.
-  Genome-wide association study of behavioral, physiological and gene
-  expression traits in commercially available outbred CFW mice. To
-  appear in *Nature Genetics*.
+Parker, C.C., Gopalakrishnan, G., Carbonetto, P., Gonzales, N.M.,
+Leung, E, Park, Y.J., Aryee, E., Davis, J., Blizard, D.A.,
+Ackert-Bicknell, C.L., Lionikas, A., Pritchard, J.K., Palmer, A.A.
+Genome-wide association study of behavioral, physiological and gene
+expression traits in commercially available outbred CFW mice. To
+appear in *Nature Genetics*.
 
 If you use this code for your research, please cite our paper
 published in *Nature Genetics*.
@@ -22,13 +22,9 @@ version 3.2.3 on a MacBook Pro (2.53 GHz Intel Core 2 Duo, OS
 X 10.11). (2) Explain where to retrieve data necessary to run these
 analyses/scripts.
 
-###Citing this resource
-
-*Details go here.*
-
 ### License
 
-The *cfw* code repository is free software: you can redistribute it
+The cfw code repository is free software: you can redistribute it
 and/or modify it under the terms of the
 [GNU General Public License](http://www.gnu.org/licenses/gpl.html) as
 published by the Free Software Foundation, either version 3 of the
@@ -108,14 +104,13 @@ experiment data from text files.
 
 ### Contributors
 
-The code in this repository was developed by
+The code in this repository was primarily developed by
 [Peter Carbonetto](http://www.cs.ubc.ca/spider/pcarbo) and
-[Shyam Gopalakrishnan](http://www.google.com).
-
-Other contributors are Clarissa C. Parker, Natalia M. Gonzales, Emily
-Leung, Yeonhee J. Park, Emmanuel Aryee, Joe Davis, David A. Blizard,
-Cheryl L. Ackert-Bicknell, Arimantas Lionikas, Jonathan K. Pritchard
-and Abraham A. Palmer.
+[Shyam Gopalakrishnan](http://www.google.com). Other contributors
+include Clarissa C. Parker, Natalia M. Gonzales, Emily Leung, Yeonhee
+J. Park, Emmanuel Aryee, Joe Davis, David A. Blizard, Cheryl
+L. Ackert-Bicknell, Arimantas Lionikas, Jonathan K. Pritchard and
+Abraham A. Palmer.
 
 ### Acknowledgments
 

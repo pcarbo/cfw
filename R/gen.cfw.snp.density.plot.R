@@ -6,8 +6,8 @@ library(lattice)
 # Load the SNP data genotyped in the CFW mouse cohort using
 # genotyping-by-sequencing (GBS).
 cat("Loading GBS SNP data.\n")
-map <- read.csv("map.csv",stringsAsFactors = FALSE,quote = "",
-                comment.char = "#")
+map <- read.table("map.txt",sep = " ",stringsAsFactors = FALSE,header = TRUE,
+                  quote = "",comment.char = "#")
 map <- transform(map,
                  chr = factor(chr),
                  ref = factor(ref),

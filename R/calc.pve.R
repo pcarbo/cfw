@@ -1,6 +1,7 @@
 # Estimate the proportion of variance in the phenotype, after removing
 # linear effects of covariates, that is explained by the available
 # genetic variants.
+library(data.table)
 source("misc.R")
 source("read.data.R")
 source("data.manip.R")
@@ -44,14 +45,15 @@ pheno <- transform(pheno,abBMD = binfactor2num(abBMD))
 # observed.
 pheno <- pheno[which(none.missing.row(pheno[c(phenotype,covariates)])),]
 
-# LOAD GENOTYPE DATA
-# ------------------
-# Load the "mean genotypes", or the mean alternative allele counts.
-#
-# TO DO: Update this with data stored in Data Dryad.
-#
-cat("Loading genotype data.\n")
-load("geno.dosage.RData")
+# LOAD SNP DATA
+# -------------
+# Load the marker info and the mean alternative allele counts ("dosages").
+cat("Loading SNP data.\n")
+map     <- read.map("map.txt")
+out     <- read.geno.dosage("geno.txt",nrow(map))
+discard <- out$discard
+X       <- out$geno
+rm(out)
 
 # Discard genotype samples from mislabeled flowcell samples.
 X <- X[which(discard == "no"),]
@@ -66,7 +68,7 @@ X     <- X[match(ids,rownames(X)),]
 # of the samples have a maximum probability genotype greater than than
 # 0.5; (2) the minor allele frequency is greater than 2%.
 f       <- apply(X,2,compute.maf)
-markers <- which(quality > 0.95 & f > 0.02)
+markers <- which(map$quality > 0.95 & f > 0.02)
 map     <- map[markers,]
 X       <- X[,markers]
 

@@ -55,6 +55,9 @@ pheno <- pheno[which(none.missing.row(pheno[c(phenotype,covariates)])),]
 # LOAD GENOTYPE DATA
 # ------------------
 # Load the "mean genotypes", or the mean alternative allele counts.
+#
+# TO DO: Update this with data stored in Data Dryad.
+#
 cat("Loading genotype data.\n")
 load("../data/geno.dosage.RData")
 

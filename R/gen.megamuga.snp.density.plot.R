@@ -7,8 +7,8 @@ library(lattice)
 # Load the SNP data genotyped in the CFW mouse cohort using MegaMUGA
 # array.
 cat("Loading MegaMUGA SNP data.\n")
-map <- read.csv("../data/megamuga.txt.gz",stringsAsFactors = FALSE,
-                quote = "",sep = " ",header = TRUE)
+map <- read.table("../data/megamuga.txt.gz",stringsAsFactors = FALSE,
+                  quote = "",sep = " ",header = TRUE)
 names(map) <- c("id","chr","pos")
 map <- transform(map,chr = factor(chr,paste0("chr",c(1:19,"X","Y"))))
 map <- transform(map,chr = as.integer(chr))
