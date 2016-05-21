@@ -1,12 +1,26 @@
 # cfw
 
-R code implementing QTL mapping of physiological, behavioral and gene
-expression phenotypes in Carworth Farms White (CFW) outbred mice. *A
-few more details will go here.*
+This github repository contains code implementing QTL mapping of
+physiological, behavioral and gene expression phenotypes, and other
+data analyses to assess the viability of using Carworth Farms White
+(CFW) mice for mapping genes and genetic loci underlying complex
+traits relevant to the study of human disease and psychology. This
+code accompanies the following publication:
 
-Some additional details: (1) Tested in R version 3.2.3 on a MacBook
-Pro (2.53 GHz Intel Core 2 Duo, OS X 10.11). (2) Explain where to
-retrieve data necessary to run these analyses/scripts.
+  Parker, C.C., Gopalakrishnan, G., Carbonetto, P., Gonzales, N.M.,
+  Leung, E, Park, Y.J., Aryee, E., Davis, J., Blizard, D.A.,
+  Ackert-Bicknell, C.L., Lionikas, A., Pritchard, J.K., Palmer, A.A.
+  Genome-wide association study of behavioral, physiological and gene
+  expression traits in commercially available outbred CFW mice. To
+  appear in *Nature Genetics*.
+
+If you use this code for your research, please cite our paper
+published in *Nature Genetics*.
+
+*Some additional details to include in this README*: (1) Tested in R
+version 3.2.3 on a MacBook Pro (2.53 GHz Intel Core 2 Duo, OS
+X 10.11). (2) Explain where to retrieve data necessary to run these
+analyses/scripts.
 
 ###Citing this resource
 
@@ -25,16 +39,18 @@ This program is distributed in the hope that it will be useful, but
 **merchantability** or **fitness for a particular purpose**. See file
 [LICENSE](LICENSE) for the full text of the license.
 
-###Credits
+### Contact info
 
-The *cfw* code was developed by
-[Peter Carbonetto](http://www.cs.ubc.ca/spider/pcarbo) and
-[Shyam Gopalakrishnan](http://www.google.com).
-[Abraham Palmer](http://palmerlab.org) and
-[Clarissa Parker](http://www.middlebury.edu/academics/neuro/faculty/node/454157)
-also contributed to the development of this software.
+For questions and feedback, please contact:
 
-### R scripts and modules
+Abraham Palmer<br>
+Department of Psychiatry<br>
+University of California, San Diego<br>
+9500 Gilman Drive<br>
+La Jolla, California, USA<br>
+aapalmer@ucsd.edu
+
+### Contents
 
 *Brief summary of scripts and modules goes here. This will be better
 organized later.*
@@ -89,3 +105,29 @@ experiment data from text files.
 + Organize R scripts a bit better.
 
 + Fix loading of genotype data in calc.pve.R.
+
+### Contributors
+
+The code in this repository was developed by
+[Peter Carbonetto](http://www.cs.ubc.ca/spider/pcarbo) and
+[Shyam Gopalakrishnan](http://www.google.com).
+
+Other contributors are Clarissa C. Parker, Natalia M. Gonzales, Emily
+Leung, Yeonhee J. Park, Emmanuel Aryee, Joe Davis, David A. Blizard,
+Cheryl L. Ackert-Bicknell, Arimantas Lionikas, Jonathan K. Pritchard
+and Abraham A. Palmer.
+
+### Acknowledgments
+
+This project was funded by NIH R01GM097737 (A.A.P.), NIH T32DA07255
+(C.C.P), NIH T32GM07197 (N.M.G.), NIH R01AR056280 (D.A.B.), NIH
+R01AR060234 (C.A.B.), the Fellowship from the Human Frontiers Science
+Program (P.C.), and the Howard Hughes Medical Institute (J.K.P.). The
+authors wish to acknowledge technical assistance from Dana Godfrey,
+Sima Lionikaite, Vikte Lionikaite, Ausra S. Lionikiene, and John
+Zekos; as well as technical and intellectual input from Drs. Mark
+Abney, Justin Borevitz, Karl Broman, Na Cai, Riyan Cheng, Nancy Cox,
+Robert Davies, Jonathan Flint, Leo Goodstadt, Paul Grabowski, Bettina
+Harr, Ellen Leffler, Richard Mott, Jerome Nicod, John Novembre, Alkes
+Price, Matthew Stephens, Daniel Weeks, and Xiang Zhou.
+
