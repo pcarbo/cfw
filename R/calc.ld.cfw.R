@@ -19,6 +19,7 @@ bins <- seq(0,5e6,1e5)
 # SNP pairs.
 ns <- 1e4
 
+# Initialize the pseudorandom number generator.
 set.seed(1)
 
 # LOAD SNP INFO
