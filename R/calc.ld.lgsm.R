@@ -5,7 +5,7 @@
 # based on Mouse Genome Assembly 37 (mm9, July 2007). The --r2 command
 # in PLINK v1.9beta3.33 is used to compute the r^2 measure of LD (see
 # Pritchard and Przeworski, 2001) based on maximum-likelihood
-# estimates of the haplotype frequences.
+# estimates of the haplotype frequencies.
 library(data.table)
 
 # SCRIPT PARAMETERS

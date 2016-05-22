@@ -9,7 +9,7 @@
 # base-pair positions are based on NCBI release 34 of the mouse genome
 # assembly. The --r2 command in PLINK v1.9beta3.33 is used to compute
 # the r^2 measure of LD (see Pritchard and Przeworski, 2001) based on
-# maximum-likelihood estimates of the haplotype frequences.
+# maximum-likelihood estimates of the haplotype frequencies.
 library(data.table)
 
 # SCRIPT PARAMETERS
