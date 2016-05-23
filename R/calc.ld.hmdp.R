@@ -2,7 +2,7 @@
 # These calculations use 130,908 SNPs genotyped on chromosomes 1-19
 # for 251 strains. The data were downloaded from
 # http://mouse.cs.ucla.edu/mousehapmap. To simplify the analysis,
-# heterozygous genotypes are set to missing.  The --r2 command in
+# heterozygous genotypes are set to missing. The --r2 command in
 # PLINK v1.9beta3.33 is used to compute the r^2 measure of LD (see
 # Pritchard and Przeworski, 2001) based on maximum-likelihood
 # estimates of the haplotype frequencies.
