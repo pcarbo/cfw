@@ -10,12 +10,17 @@ code repository accompanies the following publication:
 Parker, C.C., Gopalakrishnan, G., Carbonetto, P., Gonzales, N.M.,
 Leung, E, Park, Y.J., Aryee, E., Davis, J., Blizard, D.A.,
 Ackert-Bicknell, C.L., Lionikas, A., Pritchard, J.K., Palmer, A.A.
-Genome-wide association study of behavioral, physiological and gene
-expression traits in commercially available outbred CFW mice. To
-appear in *Nature Genetics*.
+[Genome-wide association study of behavioral, physiological and gene
+expression traits in commercially available outbred CFW
+mice](http://dx.doi.org/10.1038/ng.3609) 
+[Nature Genetics](http://nature.com/ng), published online July
+4, 2016.
 
 If you use this code for your research, please cite our paper
 published in *Nature Genetics*.
+
+We have released the phenotype, genotype and gene expression data
+through [Data Dryad package](http://dx.doi.org/10.5061/dryad.2rs41).
 
 *Some additional details to include in this README*: (1) Tested in R
 version 3.2.3 on a MacBook Pro (2.53 GHz Intel Core 2 Duo, OS
