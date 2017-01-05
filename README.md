@@ -10,10 +10,10 @@ code repository accompanies the following publication:
 Parker, C.C., Gopalakrishnan, G., Carbonetto, P., Gonzales, N.M.,
 Leung, E, Park, Y.J., Aryee, E., Davis, J., Blizard, D.A.,
 Ackert-Bicknell, C.L., Lionikas, A., Pritchard, J.K., Palmer, A.A.
-[Genome-wide association study of behavioral, physiological and gene
-expression traits in commercially available outbred CFW
-mice](http://dx.doi.org/10.1038/ng.3609). *Nature Genetics*,
-published online July 4, 2016.
+[Genome-wide association study of behavioral, physiological and
+gene expression traits in commercially available outbred CFW
+mice](http://dx.doi.org/10.1038/ng.3609). *Nature Genetics*
+**48**: 919–926.
 
 If you use this code for your research, please cite our paper
 published in *Nature Genetics*.
@@ -23,10 +23,8 @@ through Data Dryad. Follow this link to access these data:
 
 [http://dx.doi.org/10.5061/dryad.2rs41](http://dx.doi.org/10.5061/dryad.2rs41)
 
-*Some additional details to include in this README*: (1) Tested in R
-version 3.2.3 on a MacBook Pro (2.53 GHz Intel Core 2 Duo, OS
-X 10.11). (2) Explain where to retrieve data necessary to run these
-analyses/scripts.
+The R code in this repository has been tested with R version 3.2.3 on
+a MacBook Pro (2.53 GHz Intel Core 2 Duo, OS X 10.11).
 
 ### License
 
