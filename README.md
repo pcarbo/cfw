@@ -52,59 +52,52 @@ aapalmer@ucsd.edu
 
 ### Contents
 
-*Brief summary of scripts and modules goes here. This will be better
-organized later.*
+Here is a brief summary of the main source code files:
 
-+ calc.pve.R: Estimate the proportion of variance in the phenotype,
-after removing linear effects of covariates, that is explained
-by the availablegenetic variants.
++ [calc.pve.R](R/calc.pve.R): Estimate the proportion of variance in
+  the phenotype, after removing linear effects of covariates, that is
+  explained by the availablegenetic variants.
 
-+ check.pheno.R: This is a small script to check the whether the
-observed quantiles for each phenotype, conditioned on different sets
-of covariates, match what we would expect under the normal
-distribution.
++ [check.pheno.R](R/check.pheno.R): This is a small script to check
+  the whether the observed quantiles for each phenotype, conditioned
+  on different sets of covariates, match what we would expect under
+  the normal distribution.
 
-+ examine.binary.covariates.R: A script to show scatterplots of
-phenotype vs covariate, and calculate the proportion of variance in a
-phenotype of interest that is explained by variance candidate binary
-covariates (e.g., testing apparatus).
++ [examine.binary.covariates.R](R/examine.binary.covariates.R): A
+  script to show scatterplots of phenotype vs covariate, and calculate
+  the proportion of variance in a phenotype of interest that is
+  explained by variance candidate binary covariates (e.g., testing
+  apparatus).
 
-+ examine.bmd.R: A small script to compare the distribution of
-bone-mineral density (BMD) against BMD data from other studies.
++ [examine.bmd.R](R/examine.bmd.R): A small script to compare the
+  distribution of bone-mineral density (BMD) against BMD data from
+  other studies.
 
-+ examine.covariates.R: A script to show scatterplots of phenotype
-versus covariate, and calculate the proportion of variance in a
-phenotype interest that is explained by various candidate covariates
-(e.g., body weight).
++ [examine.covariates.R](R/example.covariates.R): A script to show
+  scatterplots of phenotype versus covariate, and calculate the
+  proportion of variance in a phenotype of interest that is explained
+  by various candidate covariates (e.g., body weight).
 
-+ gen.megamuga.snp.density.plot.R: Script to plot distribution of
-MegaMUGA SNPs that are polymorphic in CFW mice across chromosomes
-1-19.
++ [gen.megamuga.snp.density.plot.R](R/gen.megamuga.snp.density.plot.R):
+  Script to plot distribution of MegaMUGA SNPs that are polymorphic in
+  CFW mice across chromosomes 1-19.
 
-+ misc.R: Defines several functions that don't fit anywhere else.
++ [misc.R](R/misc.R): Defines several functions that don't fit
+  anywhere else.
 
-+ plotting.tools.R: Some functions for creating plots to summarize
-results.
++ [plotting.tools.R](R/plotting.tools.R): Some functions for creating
+  plots to summarize results.
 
-+ polygenic.R: This file contains functions that implement the
-polygenic model for estimating the proportion of variance expained
-by available genetic markers. Here is an overview of the functions
-defined in this file:
++ [polygenic.R](R/polygenic.R): This file contains functions that
+  implement the polygenic model for estimating the proportion of
+  variance expained by available genetic markers. Here is an overview
+  of the functions defined in this file:
 
-+ qtl.analyses.R: Defines a data structure that provides information
-about each QTL analysis.
++ [qtl.analyses.R](R/qtl.analyses.R): Defines a data structure that
+  provides information about each QTL analysis.
 
-+ read.data.R: Defines several functions for reading the QTL
-experiment data from text files.
-
-### To do items
-
-+ Verify that map.qtls.gemma.R is working, and clean up code in that
-  script.
-
-+ Organize R scripts a bit better.
-
-+ Fix loading of genotype data in calc.pve.R.
++ [read.data.R](R/read.data.R): Defines several functions for reading
+  the QTL experiment data from text files.
 
 ### Contributors
 
