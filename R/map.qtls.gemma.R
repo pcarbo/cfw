@@ -43,7 +43,6 @@ pheno <- cbind(pheno,
                binary.from.categorical(pheno$methcage,
                                        paste0("methcage",1:12)),
                binary.from.categorical(pheno$round,paste0("SW",1:25)))
-stop()
 if (!is.null(outliers))
   pheno <- remove.outliers(pheno,phenotype,covariates,outliers)
 
