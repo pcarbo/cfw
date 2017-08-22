@@ -1,9 +1,5 @@
 # Map QTLs for phenotypes measured in CFW outbred mice using the linear
 # mixed model (LMM) analysis implemented in GEMMA.
-#
-# TO DO: Add more details here about what this script does, and how to
-# use this script.
-#
 library(qtl)
 library(data.table)
 source("misc.R")
@@ -18,8 +14,8 @@ which.analysis <- "testis"
 chromosomes    <- NULL
 incl.markers   <- NULL
 gemmadir       <- "gemma_out"
-resultdir      <- "/Users/pcarbo"
-gemma.exe      <- "~/shyamg/bin/gemma"
+resultdir      <- "."
+gemma.exe      <- "~/bin/gemma"
 num.perms      <- 0
 seed           <- 1
 results.file   <- "gwscan.RData"
@@ -35,7 +31,7 @@ outliers   <- analysis$outliers
 # Load the phenotype data, and discard outlying phenotype values. I
 # create binary covariates from some of the categorical phenotypes.
 cat("Loading phenotype data.\n")
-pheno <- read.pheno("pheno.csv")
+pheno <- read.pheno("../data/pheno.csv")
 pheno <- prepare.pheno(pheno)
 pheno <- cbind(pheno,
                binary.from.categorical(pheno$FCbox,paste0("FCbox",1:4)),
