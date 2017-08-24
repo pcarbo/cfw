@@ -15,7 +15,7 @@ chromosomes    <- NULL
 incl.markers   <- NULL
 gemmadir       <- "gemma_out"
 resultdir      <- "."
-gemma.exe      <- "~/bin/gemma"
+gemma.exe      <- "gemma"
 num.perms      <- 0
 seed           <- 1
 results.file   <- "gwscan.RData"
@@ -49,12 +49,14 @@ pheno <- pheno[which(none.missing.row(pheno[c(phenotype,covariates)])),]
 
 # LOAD GENOTYPE DATA
 # ------------------
-# Load the "mean genotypes", or the mean alternative allele counts.
-#
-# TO DO: Update this with data stored in Data Dryad.
-#
+# Load the "mean genotypes"; i.e., the the mean alternative allele
+# counts.
 cat("Loading genotype data.\n")
-load("../data/geno.dosage.RData")
+map     <- read.map("../data/map.txt")
+out     <- read.geno.dosage("../data/geno.txt",nrow(map))
+discard <- out$discard
+X       <- out$geno
+rm(out)
 
 # Discard genotype samples from mislabeled flowcell samples.
 X <- X[which(discard == "no"),]
@@ -69,7 +71,7 @@ X     <- X[match(ids,rownames(X)),]
 # of the samples have a maximum probability genotype greater than than
 # 0.5; (2) the minor allele frequency is greater than 2%.
 f       <- apply(X,2,compute.maf)
-markers <- which(quality > 0.95 & f > 0.02)
+markers <- which(map$quality > 0.95 & f > 0.02)
 map     <- map[markers,]
 X       <- X[,markers]
 
